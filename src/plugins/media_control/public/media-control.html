@@ -1,14 +1,14 @@
-<div class="media-control-background" data-background></div>
+<!-- <div class="media-control-background" data-background></div> -->
 <div class="media-control-layer" data-controls>
   <%  var renderBar = function(name) { %>
       <div class="bar-container" data-<%= name %>>
         <div class="bar-background" data-<%= name %>>
-          <div class="bar-fill-1" data-<%= name %>></div>
+          <!-- <div class="bar-fill-1" data-<%= name %>></div> -->
           <div class="bar-fill-2" data-<%= name %>></div>
-          <div class="bar-hover" data-<%= name %>></div>
+          <!-- <div class="bar-hover" data-<%= name %>></div> -->
         </div>
         <div class="bar-scrubber" data-<%= name %>>
-          <div class="bar-scrubber-icon" data-<%= name %>></div>
+          <!-- <div class="bar-scrubber-icon" data-<%= name %>></div> -->
         </div>
       </div>
   <%  }; %>
@@ -52,19 +52,28 @@
           }
         });
       }; %>
+  <div class="media-control-status-panel row" data-media-control>
+    <span class="members-number status-block">
+      126 952 участника
+    </span>
+    <span class="distance status-block">
+      ...идут 12ч 35мин и прошли 38км
+    </span>
+  </div>
   <% if (settings.default && settings.default.length) { %>
   <div class="media-control-center-panel" data-media-control>
     <% render(settings.default); %>
   </div>
   <% } %>
-  <% if (settings.left && settings.left.length) { %>
-  <div class="media-control-left-panel" data-media-control>
-    <% render(settings.left); %>
+  <div class="row media-control-footer-panel">
+    <div class="media-control-left-panel" data-media-control>
+      <span>Информация о времени выхода вашего героя отправлена вам на почту.</span>
+    </div>
+
+    <% if (settings.right && settings.right.length) { %>
+    <div class="media-control-right-panel" data-media-control>
+      <% render(settings.right); %>
+    </div>
+    <% } %>
   </div>
-  <% } %>
-  <% if (settings.right && settings.right.length) { %>
-  <div class="media-control-right-panel" data-media-control>
-    <% render(settings.right); %>
-  </div>
-  <% } %>
 </div>

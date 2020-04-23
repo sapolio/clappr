@@ -19,6 +19,8 @@ import './public/media-control.scss'
 import mediaControlHTML from './public/media-control.html'
 import { SvgIcons } from '../../base/utils'
 
+const T0 = 6000
+
 export default class MediaControl extends UICorePlugin {
   get name() { return 'media_control' }
   get disabled() {
@@ -362,7 +364,8 @@ export default class MediaControl extends UICorePlugin {
     this.setInitialVolume()
     this.changeTogglePlay()
     this.bindContainerEvents()
-    this.settingsUpdate()
+    // this.settingsUpdate()
+    this.render()
     this.container && this.container.trigger(Events.CONTAINER_PLAYBACKDVRSTATECHANGED, this.container.isDvrInUse())
     this.container && this.container.mediaControlDisabled && this.disable()
     this.trigger(Events.MEDIACONTROL_CONTAINERCHANGED)
@@ -400,9 +403,22 @@ export default class MediaControl extends UICorePlugin {
 
     this.currentPositionValue = position
     this.currentDurationValue = timeProgress.total
+    this.renderStatus()
     this.renderSeekBar()
   }
 
+  renderStatus () {
+    let time = parseInt(this.currentPositionValue + T0) // seconds
+    const members = parseInt(time * 0.6667)
+    const distance = +(0.0012 * time).toFixed(1) // kilometers
+    time = parseInt((this.currentPositionValue + T0) / 60) // minutes
+    const minutes = time % 60
+    const hours = parseInt(time / 60)
+    this.$statusMember.text(`${members} участника`)
+    this.$statusDistance.text(`
+      ...идут ${hours}ч ${minutes}мин и прошли ${distance}км
+    `)
+  }
   renderSeekBar() {
     // this will be triggered as soon as these become available
     if (this.currentPositionValue === null || this.currentDurationValue === null) return
@@ -550,6 +566,8 @@ export default class MediaControl extends UICorePlugin {
     this.$volumeBarFill = this.$el.find('.bar-fill-1[data-volume]')
     this.$volumeBarScrubber = this.$el.find('.bar-scrubber[data-volume]')
     this.$hdIndicator = this.$el.find('button.media-control-button[data-hd-indicator]')
+    this.$statusMember = this.$el.find('.members-number.status-block')
+    this.$statusDistance = this.$el.find('.distance.status-block')
     this.resetIndicators()
     this.initializeIcons()
   }
@@ -672,7 +690,14 @@ export default class MediaControl extends UICorePlugin {
 
   render() {
     const timeout = this.options.hideMediaControlDelay || 2000
-    this.settings && this.$el.html(this.template({ settings: this.settings }))
+    // this.settings && this.$el.html(this.template({ settings: this.settings }))
+    this.settings && this.$el.html(this.template({
+      settings: {
+        left: [],
+        right: ['volume'],
+        default: ['seekbar']
+      }
+    }))
     this.createCachedElements()
     this.$playPauseToggle.addClass('paused')
     this.$playStopToggle.addClass('stopped')
