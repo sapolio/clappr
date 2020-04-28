@@ -5,8 +5,9 @@
   line-height: 20px;
   font-size: 0;
   left: -100%;
-  bottom: 55px;
-  background-color: rgba(2, 2, 2, 0.5);
+  bottom: 25px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
   z-index: 9999;
   transition: opacity 0.1s ease;
 
@@ -25,10 +26,13 @@
 
   [data-duration] {
     display: inline-block;
-    color: rgba(255,255,255,.5);
+    color: rgba(255, 255, 255, 0.5);
     font-size: 10px;
     padding-right: 7px;
     vertical-align: top;
-    &:before { content: "|"; margin-right: 7px; }
+    &:before {
+      content: "|";
+      margin-right: 7px;
+    }
   }
 }

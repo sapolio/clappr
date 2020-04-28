@@ -106,6 +106,7 @@ player.attachTo(playerElement);
         var playerElement = document.getElementById("player-wrapper");
 
         player = new Clappr.Player({
+          hideMediaControl: false,
           source: urlParams.src || 'http://clappr.io/highline.mp4',
           poster: urlParams.poster || 'http://clappr.io/poster.png',
           mute: true,

@@ -19,8 +19,6 @@ import './public/media-control.scss'
 import mediaControlHTML from './public/media-control.html'
 import { SvgIcons } from '../../base/utils'
 
-const T0 = 6000
-
 export default class MediaControl extends UICorePlugin {
   get name() { return 'media_control' }
   get disabled() {
@@ -50,6 +48,7 @@ export default class MediaControl extends UICorePlugin {
       'click .bar-container[data-seekbar]': 'seek',
       'click .bar-container[data-volume]': 'onVolumeClick',
       'click .drawer-icon[data-volume]': 'toggleMute',
+      'click .share[data-share]': 'onShareClick',
       'mouseenter .drawer-container[data-volume]': 'showVolumeBar',
       'mouseleave .drawer-container[data-volume]': 'hideVolumeBar',
       'mousedown .bar-container[data-volume]': 'startVolumeDrag',
@@ -80,6 +79,7 @@ export default class MediaControl extends UICorePlugin {
       right: ['volume'],
       default: ['position', 'seekbar', 'duration']
     }
+    this.participantsRatio = this.options.participantsRatio || 0.6667
     this.kibo = new Kibo(this.options.focusElement)
     this.bindKeyEvents()
 
@@ -203,15 +203,8 @@ export default class MediaControl extends UICorePlugin {
     this.$volumeBarContainer.find('.segmented-bar-element').removeClass('fill')
     const item = Math.ceil(this.volume / 10.0)
     this.$volumeBarContainer.find('.segmented-bar-element').slice(0, item).addClass('fill')
-    this.$volumeIcon.html('')
-    this.$volumeIcon.removeClass('muted')
-    if (!this.muted) {
-      this.$volumeIcon.append(SvgIcons.volume)
-    } else {
-      this.$volumeIcon.append(SvgIcons.volumeMute)
-      this.$volumeIcon.addClass('muted')
-    }
-    this.applyButtonStyle(this.$volumeIcon)
+    if (this.muted) this.$volumeIcon.addClass('muted')
+    else this.$volumeIcon.removeClass('muted')
   }
 
   changeTogglePlay() {
@@ -408,16 +401,17 @@ export default class MediaControl extends UICorePlugin {
   }
 
   renderStatus () {
-    let time = parseInt(this.currentPositionValue + T0) // seconds
-    const members = parseInt(time * 0.6667)
-    const distance = +(0.0012 * time).toFixed(1) // kilometers
-    time = parseInt((this.currentPositionValue + T0) / 60) // minutes
-    const minutes = time % 60
-    const hours = parseInt(time / 60)
+    let time = parseInt(this.currentPositionValue) // seconds
+    const members = parseInt(time * this.participantsRatio)
     this.$statusMember.text(`${members} участника`)
-    this.$statusDistance.text(`
-      ...идут ${hours}ч ${minutes}мин и прошли ${distance}км
-    `)
+    // const distance = +(0.0012 * time).toFixed(1) // kilometers
+    // time = parseInt(time / 60) // minutes
+    // const minutes = time % 60
+    // const hours = parseInt(time / 60)
+    // Убрано уз макета
+    // this.$statusDistance.text(`
+    //   ...идут ${hours}ч ${minutes}мин и прошли ${distance}км
+    // `)
   }
   renderSeekBar() {
     // this will be triggered as soon as these become available
@@ -746,8 +740,21 @@ export default class MediaControl extends UICorePlugin {
     this.trigger(Events.MEDIACONTROL_RENDERED)
     return this
   }
+
+  onShareClick(event) {
+    event.preventDefault()
+    this.core.getCurrentContainer().pause()
+    const referer = window.location.href.split('?')[0]
+    const links = {
+      vk: 'https://vk.com/share.php?url=',
+      fb: 'https://www.facebook.com/sharer/sharer.php?u=',
+      ok: 'https://www.odnoklassniki.ru/dk?st.cmd=addShare&st.s=1&st._surl='
+    }
+    window.open(links[event.currentTarget.dataset.share] + referer, '', 'status=no,location=no,toolbar=no,menubar=no,width=800,height=400')
+    return false
+  }
 }
 
-MediaControl.extend = function(properties) {
+MediaControl.extend = function (properties) {
   return extend(MediaControl, properties)
 }

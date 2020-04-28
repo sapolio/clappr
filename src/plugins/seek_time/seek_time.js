@@ -151,7 +151,7 @@ export default class SeekTime extends UICorePlugin {
     this.displayedSeekTime = null
     this.$el.html(this.template())
     this.$el.hide()
-    this.mediaControl.$el.append(this.el)
+    this.mediaControl.$el.find('.bar-container[data-seekbar]').append(this.el)
     this.$seekTimeEl = this.$el.find('[data-seek-time]')
     this.$durationEl = this.$el.find('[data-duration]')
     this.$durationEl.hide()
