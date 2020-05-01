@@ -6,6 +6,10 @@
  * The MediaControl is responsible for displaying the Player controls.
  */
 
+// const barWidth = this.$seekBarContainer.width()
+// const scrubberWidth = this.$seekBarScrubber.width()
+// const maxLeft = (barWidth - scrubberWidth) / barWidth * 100
+
 import { Config, Fullscreen, formatTime, extend, removeArrayItem } from '../../base/utils'
 import { Kibo } from '../../vendor'
 import Events from '../../base/events'
@@ -225,10 +229,6 @@ export default class MediaControl extends UICorePlugin {
   }
 
   mousemoveOnSeekBar(event) {
-    if (this.settings.seekEnabled) {
-      const offsetX = event.pageX - this.$seekBarContainer.offset().left - (this.$seekBarHover.width() / 2)
-      this.$seekBarHover.css({ left: offsetX })
-    }
     this.trigger(Events.MEDIACONTROL_MOUSEMOVE_SEEKBAR, event)
   }
 
@@ -266,10 +266,13 @@ export default class MediaControl extends UICorePlugin {
     if (!this.settings.seekEnabled) return
     this.draggingSeekBar = true
     this.$el.addClass('dragging')
-    this.$seekBarLoaded.addClass('media-control-notransition')
     this.$seekBarPosition.addClass('media-control-notransition')
     this.$seekBarScrubber.addClass('media-control-notransition')
-    event && event.preventDefault()
+    if (event) {
+      event.preventDefault()
+      this.dragOffset = event.pageX
+      this.scrubberStartOffset = this.$seekBarScrubber.offset().left - this.$seekBarSizeContainer.offset().left
+    }
   }
 
   startVolumeDrag(event) {
@@ -278,10 +281,9 @@ export default class MediaControl extends UICorePlugin {
     event && event.preventDefault()
   }
 
-  stopDrag(event) {
-    this.draggingSeekBar && this.seek(event)
+  stopDrag() { // event object removed
+    this.draggingSeekBar && this.seek() // event object removed
     this.$el.removeClass('dragging')
-    this.$seekBarLoaded.removeClass('media-control-notransition')
     this.$seekBarPosition.removeClass('media-control-notransition')
     this.$seekBarScrubber.removeClass('media-control-notransition dragging')
     this.draggingSeekBar = false
@@ -291,8 +293,13 @@ export default class MediaControl extends UICorePlugin {
   updateDrag(event) {
     if (this.draggingSeekBar) {
       event.preventDefault()
-      const offsetX = event.pageX - this.$seekBarContainer.offset().left
-      let pos = offsetX / this.$seekBarContainer.width() * 100
+      const delta = event.pageX - this.dragOffset
+      // this.dragOffset = event.pageX
+      // const scrubberOffset = this.$seekBarScrubber.offset().left
+      this.scrubberOffset = this.scrubberStartOffset + delta
+      // const offsetX = event.pageX - this.$seekBarSizeContainer.offset().left
+      // const offsetX = event.target.offsetLeft
+      let pos = this.scrubberOffset / this.$seekBarSizeContainer.width() * 100
       pos = Math.min(100, Math.max(pos, 0))
       this.setSeekPercentage(pos)
     } else if (this.draggingVolumeBar) {
@@ -383,12 +390,6 @@ export default class MediaControl extends UICorePlugin {
     this.changeTogglePlay()
   }
 
-  updateProgressBar(progress) {
-    const loadedStart = progress.start / progress.total * 100
-    const loadedEnd = progress.current / progress.total * 100
-    this.$seekBarLoaded.css({ left: `${loadedStart}%`, width: `${loadedEnd - loadedStart}%` })
-  }
-
   onTimeUpdate(timeProgress) {
     if (this.draggingSeekBar) return
     // TODO why should current time ever be negative?
@@ -403,12 +404,18 @@ export default class MediaControl extends UICorePlugin {
   renderStatus () {
     let time = parseInt(this.currentPositionValue) // seconds
     const members = parseInt(time * this.participantsRatio)
-    this.$statusMember.text(`${members} участника`)
+    const wordEnding = (n) => {
+      let ending = ''
+      if (n >= 2 && n <= 4) ending = 'а'
+      if (n >= 5 && n <= 9 || !n) ending = 'ов'
+      return ending
+    }
+    this.$statusMember.text(`${members} участник${wordEnding(members % 10)}`)
+    // Убрано уз макета
     // const distance = +(0.0012 * time).toFixed(1) // kilometers
     // time = parseInt(time / 60) // minutes
     // const minutes = time % 60
     // const hours = parseInt(time / 60)
-    // Убрано уз макета
     // this.$statusDistance.text(`
     //   ...идут ${hours}ч ${minutes}мин и прошли ${distance}км
     // `)
@@ -438,8 +445,14 @@ export default class MediaControl extends UICorePlugin {
 
   seek(event) {
     if (!this.settings.seekEnabled) return
-    const offsetX = event.pageX - this.$seekBarContainer.offset().left
-    let pos = offsetX / this.$seekBarContainer.width() * 100
+    let pos
+    if (event) {
+      if (event.target.className === 'bar-scrubber') return
+      const offsetX = event.pageX - this.$seekBarContainer.offset().left 
+      pos = offsetX / this.$seekBarContainer.width() * 100
+    } else {
+      pos = this.scrubberOffset / this.$seekBarSizeContainer.width() * 100
+    }
     pos = Math.min(100, Math.max(pos, 0))
     this.container && this.container.seekPercentage(pos)
     this.setSeekPercentage(pos)
@@ -549,8 +562,9 @@ export default class MediaControl extends UICorePlugin {
     this.$playStopToggle = $layer.find('button.media-control-button[data-playstop]')
     this.$position = $layer.find('.media-control-indicator[data-position]')
     this.$seekBarContainer = $layer.find('.bar-container[data-seekbar]')
-    this.$seekBarHover = $layer.find('.bar-hover[data-seekbar]')
-    this.$seekBarLoaded = $layer.find('.bar-fill-1[data-seekbar]')
+    this.$seekBarSizeContainer = $layer.find('.bar-size-container[data-seekbar]')
+    // this.$seekBarHover = $layer.find('.bar-hover[data-seekbar]')
+    // this.$seekBarLoaded = $layer.find('.bar-fill-1[data-seekbar]')
     this.$seekBarPosition = $layer.find('.bar-fill-2[data-seekbar]')
     this.$seekBarScrubber = $layer.find('.bar-scrubber[data-seekbar]')
     this.$volumeBarContainer = $layer.find('.bar-container[data-volume]')
@@ -561,7 +575,6 @@ export default class MediaControl extends UICorePlugin {
     this.$volumeBarScrubber = this.$el.find('.bar-scrubber[data-volume]')
     this.$hdIndicator = this.$el.find('button.media-control-button[data-hd-indicator]')
     this.$statusMember = this.$el.find('.members-number.status-block')
-    this.$statusDistance = this.$el.find('.distance.status-block')
     this.resetIndicators()
     this.initializeIcons()
   }

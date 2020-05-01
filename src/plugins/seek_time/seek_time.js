@@ -109,8 +109,9 @@ export default class SeekTime extends UICorePlugin {
       return
     }
     if (!this.shouldBeVisible()) {
-      this.$el.hide()
-      this.$el.css('left', '-100%')
+      // this.$el.hide()
+      // this.$el.css('left', '-100%')
+      this.$el.css('left', '50%')
     } else {
       const seekTime = this.getSeekTime()
       const currentSeekTime = formatTime(seekTime.seekTime, this.useActualLiveTime)

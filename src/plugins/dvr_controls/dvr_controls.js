@@ -3,7 +3,7 @@ import template from '../../base/template'
 import Playback from '../../base/playback'
 import Events from '../../base/events'
 import dvrHTML from './public/index.html'
-import './public/dvr_controls.scss'
+// import './public/dvr_controls.scss'
 
 export default class DVRControls extends UICorePlugin {
   get template() { return template(dvrHTML) }
@@ -46,7 +46,7 @@ export default class DVRControls extends UICorePlugin {
     this.core.mediaControl.$el.addClass('live')
     if (dvrEnabled) {
       this.core.mediaControl.$el.addClass('dvr')
-      this.core.mediaControl.$el.find('.media-control-indicator[data-position], .media-control-indicator[data-duration]').hide()
+      // this.core.mediaControl.$el.find('.media-control-indicator[data-position], .media-control-indicator[data-duration]').hide()
     } else { this.core.mediaControl.$el.removeClass('dvr') }
 
   }
@@ -82,10 +82,9 @@ export default class DVRControls extends UICorePlugin {
       live: this.core.i18n.t('live'),
       backToLive: this.core.i18n.t('back_to_live')
     }))
-    if (this.shouldRender()) {
-      this.core.mediaControl.$el.addClass('live')
-      this.core.mediaControl.$('.media-control-left-panel[data-media-control]').append(this.$el)
-    }
+    if (this.shouldRender()) this.core.mediaControl.$el.addClass('live')
+    // this.core.mediaControl.$('.media-control-left-panel[data-media-control]').append(this.$el)
+    // }
     return this
   }
 }

@@ -1,3 +1,4 @@
+$blur-size: 54px;
 [data-player] .cc-controls[data-cc-controls],
 [data-player] .cc-controls[data-cc-controls].available {
   display: none;
@@ -19,21 +20,16 @@
     flex-wrap: nowrap;
     justify-content: space-between;
   }
-  .media-control-header {
-    padding: 10px;
-
-    .links {
-      a {
-        display: block;
-        margin-bottom: 20px;
-        pointer-events: initial;
-      }
-    }
+  .logo {
+    position: absolute;
+    left: 34px;
+    top: 26px;
   }
+
   .share-container {
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    bottom: 26px;
+    right: 34px;
 
     a {
       display: inline-block;
@@ -42,8 +38,8 @@
       height: 43px;
       border-radius: 6px;
       margin-left: 20px;
-      background: rgba(63, 28, 20, 0.64);
-      backdrop-filter: blur(2px);
+      background: rgba(71, 71, 71, 0.4);
+      backdrop-filter: blur($blur-size);
 
       svg {
         width: 100%;
@@ -106,38 +102,30 @@
 
   .media-control-layer[data-controls] {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
+    bottom: 26px;
+    left: 34px;
     width: 60%;
-    height: 100px;
+    height: 114px;
     padding: 10px;
     pointer-events: auto;
-    background: rgba(63, 28, 20, 0.64);
+    background: rgba(71, 71, 71, 0.4);
     color: white;
     /* Note: backdrop-filter has minimal browser support */
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur($blur-size);
     border-radius: 10px;
     transition: bottom 0.4s ease-out;
 
-    .media-control-left-panel[data-media-control] {
-      float: left;
-
-      .members-number {
-        font-size: 35px;
-        line-height: 35px;
-      }
+    .members-number {
+      font-size: 35px;
+      line-height: 35px;
     }
 
     .media-control-center-panel[data-media-control] {
       position: relative;
       height: 45%;
-      padding: 10px 0 5px;
+      padding: 12px 0 5px;
       text-align: center;
       line-height: 32px;
-    }
-
-    .media-control-right-panel[data-media-control] {
-      float: right;
     }
 
     .media-control-layer-header {
@@ -220,11 +208,11 @@
       &[data-duration] {
         display: inline-block;
         height: 100%;
-        font-size: 10px;
+        font-size: 16px;
         color: white;
         cursor: default;
-        line-height: 24px;
         position: relative;
+        pointer-events: none;
       }
       &[data-duration] {
         &:before {
@@ -245,18 +233,15 @@
       border: solid 1px white;
       cursor: pointer;
 
+      .bar-size-container[data-seekbar] {
+        position: absolute;
+        height: 100%;
+        width: calc(100% - 50px);
+      }
+
       .bar-background[data-seekbar] {
         width: 100%;
         height: 100%;
-
-        .bar-fill-1[data-seekbar] {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 0;
-          height: 100%;
-          transition: all 0.1s ease-out;
-        }
 
         .bar-fill-2[data-seekbar] {
           position: absolute;
@@ -266,16 +251,6 @@
           height: 100%;
           background-color: white;
           transition: all 0.1s ease-out;
-        }
-
-        .bar-hover[data-seekbar] {
-          opacity: 0;
-          position: absolute;
-          top: 0;
-          width: 2px;
-          height: 100%;
-          background-color: rgba(255, 255, 255, 0.5);
-          transition: opacity 0.1s ease;
         }
       }
 
@@ -300,10 +275,10 @@
 
       .bar-scrubber[data-seekbar] {
         position: absolute;
-        top: -2px;
-        bottom: -2px;
+        top: -4px;
+        bottom: -4px;
         left: 0;
-        width: 30px;
+        width: 50px;
         background: #ed6337;
         box-shadow: 0px 6px 18px rgba(49, 60, 42, 0.4);
         border-radius: 4px;
@@ -331,6 +306,7 @@
 
       .drawer-icon-container[data-volume] {
         float: left;
+        height: 100%;
 
         .drawer-icon[data-volume] {
           background-color: transparent;
@@ -360,9 +336,9 @@
         float: left;
         position: relative;
         overflow: hidden;
-        top: 3px;
+        top: 5px;
         width: 44px;
-        height: 14px;
+        height: 15px;
         padding: 3px 0;
         padding-left: 4px;
         transition: width 0.2s ease-out;

@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -106,13 +107,18 @@ player.attachTo(playerElement);
         var playerElement = document.getElementById("player-wrapper");
 
         player = new Clappr.Player({
+          participantsRatio: 4,
           hideMediaControl: false,
-          source: urlParams.src || 'http://clappr.io/highline.mp4',
-          poster: urlParams.poster || 'http://clappr.io/poster.png',
+          // source: urlParams.src || 'http://clappr.io/highline.mp4',
+          source: urlParams.src || '//originstack.cdnvideo.ru/shemetillo/records/undead_regiment%2020200502t013155.m3u8',
+          // poster: urlParams.poster || 'http://clappr.io/poster.png',
           mute: true,
           autoPlay: true,
-          height: 360,
-          width: 640
+          height: 720,
+          width: 1280,
+          poster: {
+            showOnVideoEnd: false
+          }
         });
 
         player.attachTo(playerElement);
