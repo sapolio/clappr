@@ -33,36 +33,41 @@ export function extend(parent, properties) {
 }
 
 export function formatTime(time, paddedHours) {
-  if (!isFinite(time))
-    return '--:--'
+  if (!isFinite(time)) return '--:--'
 
-  time = time * 1000
-  time = parseInt(time/1000)
+  time = parseInt(time) // seconds
   const seconds = time % 60
-  time = parseInt(time/60)
+  time = parseInt(time / 60) // minutes
   const minutes = time % 60
-  time = parseInt(time/60)
-  const hours = time % 24
-  const days = parseInt(time/24)
+  const hours = parseInt(time / 60)
+
+  // time = time * 1000
+  // time = parseInt(time/1000)
+  // const seconds = time % 60
+  // time = parseInt(time/60)
+  // const minutes = time % 60
+  // time = parseInt(time/60)
+  // const hours = time % 24
+  // const days = parseInt(time/24)
   let out = ''
-  if (days && days > 0) {
-    out += days + ':'
-    if (hours < 1) out += '00:'
-  }
-  if (hours && hours > 0 || paddedHours) out += ('0' + hours).slice(-2) + ':'
-  out += ('0' + minutes).slice(-2) + ':'
-  out += ('0' + seconds).slice(-2)
+  // if (days && days > 0) {
+  //   out += days + ':'
+  //   if (hours < 1) out += '00:'
+  // }
+  if (hours && hours > 0 || paddedHours) out += ('0' + hours).slice(-2) + 'ч '
+  out += ('0' + minutes).slice(-2) + 'м'
+  if (!hours) out += ' ' + ('0' + seconds).slice(-2) + 'с'
   return out.trim()
 }
 
 export const Fullscreen = {
-  fullscreenElement: function() {
+  fullscreenElement: function () {
     return document.fullscreenElement ||
       document.webkitFullscreenElement ||
       document.mozFullScreenElement ||
       document.msFullscreenElement
   },
-  requestFullscreen: function(el) {
+  requestFullscreen: function (el) {
     if (el.requestFullscreen)
       el.requestFullscreen()
     else if (el.webkitRequestFullscreen)
@@ -77,7 +82,7 @@ export const Fullscreen = {
       el.webkitEnterFullScreen()
 
   },
-  cancelFullscreen: function(el=document) {
+  cancelFullscreen: function (el = document) {
     if (el.exitFullscreen)
       el.exitFullscreen()
     else if (el.webkitCancelFullScreen)
@@ -90,7 +95,7 @@ export const Fullscreen = {
       el.msExitFullscreen()
 
   },
-  fullscreenEnabled: function() {
+  fullscreenEnabled: function () {
     return !!(
       document.fullscreenEnabled ||
       document.webkitFullscreenEnabled ||
@@ -180,7 +185,7 @@ export function seekStringToSeconds(paramName = 't') {
   const parts = seekString.match(/[0-9]+[hms]+/g) || []
   if (parts.length > 0) {
     const factor = { 'h': 3600, 'm': 60, 's': 1 }
-    parts.forEach(function(el) {
+    parts.forEach(function (el) {
       if (el) {
         const suffix = el[el.length - 1]
         const time = parseInt(el.slice(0, el.length - 1), 10)
@@ -210,14 +215,14 @@ export function currentScriptUrl() {
 }
 
 export const requestAnimationFrame = (window.requestAnimationFrame ||
-                            window.mozRequestAnimationFrame ||
-                            window.webkitRequestAnimationFrame ||
-                            function(fn) { window.setTimeout(fn, 1000/60) }).bind(window)
+  window.mozRequestAnimationFrame ||
+  window.webkitRequestAnimationFrame ||
+  function (fn) { window.setTimeout(fn, 1000 / 60) }).bind(window)
 
 export const cancelAnimationFrame = (window.cancelAnimationFrame ||
-                           window.mozCancelAnimationFrame ||
-                           window.webkitCancelAnimationFrame ||
-                           window.clearTimeout).bind(window)
+  window.mozCancelAnimationFrame ||
+  window.webkitCancelAnimationFrame ||
+  window.clearTimeout).bind(window)
 
 export function getBrowserLanguage() {
   return window.navigator && window.navigator.language

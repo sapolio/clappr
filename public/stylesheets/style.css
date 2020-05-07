@@ -30,7 +30,9 @@ body {
   right: 7%;
 }
 
-.header ul, .header li, .header a {
+.header ul,
+.header li,
+.header a {
   position: relative;
   display: inline;
   float: right;
@@ -45,7 +47,9 @@ a:hover {
   text-decoration: none;
 }
 
-.header a:visited, a:active, a:link {
+.header a:visited,
+a:active,
+a:link {
   color: #ddd;
   text-decoration: none;
 }
@@ -61,9 +65,7 @@ a:hover {
 }
 
 .main {
-  display: inline-block;
   margin: 0;
-  padding: 0px 20px 0 20px;
   border: 0;
 }
 
@@ -76,10 +78,16 @@ a:hover {
   margin-right: 2px;
   font-family: monospace;
 }
-
+#output {
+  position: relative;
+  padding-top: 56.25%;
+}
 #player-wrapper {
-  min-width: 320px;
-  min-height: 180px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .sidebar {
@@ -92,7 +100,7 @@ a:hover {
 }
 
 #editor {
-  border: 1px solid #c0c0EE;
+  border: 1px solid #c0c0ee;
   min-height: 360px;
 }
 
@@ -103,7 +111,9 @@ a:hover {
   top: 65px;
 }
 
-.btn:focus { outline: none; }
+.btn:focus {
+  outline: none;
+}
 
 .player {
   display: inline-block;

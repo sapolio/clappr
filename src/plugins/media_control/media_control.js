@@ -6,11 +6,7 @@
  * The MediaControl is responsible for displaying the Player controls.
  */
 
-// const barWidth = this.$seekBarContainer.width()
-// const scrubberWidth = this.$seekBarScrubber.width()
-// const maxLeft = (barWidth - scrubberWidth) / barWidth * 100
-
-import { Config, Fullscreen, formatTime, extend, removeArrayItem } from '../../base/utils'
+import { Config, Fullscreen, formatTime, extend, removeArrayItem, isNumber } from '../../base/utils'
 import { Kibo } from '../../vendor'
 import Events from '../../base/events'
 import UICorePlugin from '../../base/ui_core_plugin'
@@ -22,6 +18,8 @@ import $ from 'clappr-zepto'
 import './public/media-control.scss'
 import mediaControlHTML from './public/media-control.html'
 import { SvgIcons } from '../../base/utils'
+
+const startTimeStamp = Date.parse('2020-05-09T07:00:00.000+03:00')
 
 export default class MediaControl extends UICorePlugin {
   get name() { return 'media_control' }
@@ -51,7 +49,7 @@ export default class MediaControl extends UICorePlugin {
       'click [data-fullscreen]': 'toggleFullscreen',
       'click .bar-container[data-seekbar]': 'seek',
       'click .bar-container[data-volume]': 'onVolumeClick',
-      'click .drawer-icon[data-volume]': 'toggleMute',
+      'click .volume-button[data-volume]': 'toggleMute',
       'click .share[data-share]': 'onShareClick',
       'mouseenter .drawer-container[data-volume]': 'showVolumeBar',
       'mouseleave .drawer-container[data-volume]': 'hideVolumeBar',
@@ -75,6 +73,7 @@ export default class MediaControl extends UICorePlugin {
     this.persistConfig = this.options.persistConfig
     this.currentPositionValue = null
     this.currentDurationValue = null
+    this.currentDate = new Date(startTimeStamp)
     this.keepVisible = false
     this.fullScreenOnVideoTagSupported = null // unknown
     this.setInitialVolume()
@@ -129,7 +128,7 @@ export default class MediaControl extends UICorePlugin {
     this.listenTo(this.container, Events.CONTAINER_STOP, this.changeTogglePlay)
     this.listenTo(this.container, Events.CONTAINER_DBLCLICK, this.toggleFullscreen)
     this.listenTo(this.container, Events.CONTAINER_TIMEUPDATE, this.onTimeUpdate)
-    this.listenTo(this.container, Events.CONTAINER_PROGRESS, this.updateProgressBar)
+    // this.listenTo(this.container, Events.CONTAINER_PROGRESS, this.updateProgressBar)
     this.listenTo(this.container, Events.CONTAINER_SETTINGSUPDATE, this.settingsUpdate)
     this.listenTo(this.container, Events.CONTAINER_PLAYBACKDVRSTATECHANGED, this.settingsUpdate)
     this.listenTo(this.container, Events.CONTAINER_HIGHDEFINITIONUPDATE, this.highDefinitionUpdate)
@@ -245,12 +244,15 @@ export default class MediaControl extends UICorePlugin {
   }
 
   playerResize(size) {
+    if (!isNumber(size.width)) this.core.firstResize = true
     this.$fullscreenToggle.html('')
     let icon = this.core.isFullscreen() ? SvgIcons.exitFullscreen : SvgIcons.fullscreen
     this.$fullscreenToggle.append(icon)
     this.applyButtonStyle(this.$fullscreenToggle)
-    this.$el.find('.media-control').length !== 0 && this.$el.removeClass('w320')
-    if (size.width <= 320 || this.options.hideVolumeBar) this.$el.addClass('w320')
+    this.$el[size.width <= 850 ? 'addClass' : 'removeClass']('w850') 
+    this.$el[size.width <= 550 ? 'addClass' : 'removeClass']('w550')
+    this.$el[size.width <= 460 ? 'addClass' : 'removeClass']('w460')
+    this.$el[size.width <= 400 ? 'addClass' : 'removeClass']('w400') 
   }
 
   togglePlayPause() {
@@ -316,12 +318,12 @@ export default class MediaControl extends UICorePlugin {
 
   toggleMute() {
     if (this.muted) {
-      this.setVolume(this._mutedVolume || 100)
-      this._mutedVolume = null
+      this.setVolume(50)
+      // this._mutedVolume = null
       return
     }
 
-    this._mutedVolume = this.volume
+    // this._mutedVolume = this.volume
     this.setVolume(0)
   }
 
@@ -397,13 +399,15 @@ export default class MediaControl extends UICorePlugin {
 
     this.currentPositionValue = position
     this.currentDurationValue = timeProgress.total
+    this.currentDate.setTime(startTimeStamp + (position * 1000))
     this.renderStatus()
     this.renderSeekBar()
   }
 
   renderStatus () {
     let time = parseInt(this.currentPositionValue) // seconds
-    const members = parseInt(time * this.participantsRatio)
+    let members = parseInt(time * this.participantsRatio)+''
+    members = members.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')
     const wordEnding = (n) => {
       let ending = ''
       if (n >= 2 && n <= 4) ending = 'а'
@@ -411,6 +415,10 @@ export default class MediaControl extends UICorePlugin {
       return ending
     }
     this.$statusMember.text(`${members} участник${wordEnding(members % 10)}`)
+    const day = this.currentDate.getDate()
+    const hour = ('0' + this.currentDate.getHours()).slice(-2)
+    const minute = ('0' + this.currentDate.getMinutes()).slice(-2)
+    this.$statusDate.text(`${day} мая ${hour}:${minute}`)
     // Убрано уз макета
     // const distance = +(0.0012 * time).toFixed(1) // kilometers
     // time = parseInt(time / 60) // minutes
@@ -556,8 +564,8 @@ export default class MediaControl extends UICorePlugin {
 
   createCachedElements() {
     const $layer = this.$el.find('.media-control-layer')
-    this.$duration = $layer.find('.media-control-indicator[data-duration]')
-    this.$fullscreenToggle = $layer.find('button.media-control-button[data-fullscreen]')
+    this.$duration = $layer.find('.bar-duration[data-seekbar]')
+    this.$fullscreenToggle = $('button.media-control-button[data-fullscreen]')
     this.$playPauseToggle = $layer.find('button.media-control-button[data-playpause]')
     this.$playStopToggle = $layer.find('button.media-control-button[data-playstop]')
     this.$position = $layer.find('.media-control-indicator[data-position]')
@@ -569,12 +577,13 @@ export default class MediaControl extends UICorePlugin {
     this.$seekBarScrubber = $layer.find('.bar-scrubber[data-seekbar]')
     this.$volumeBarContainer = $layer.find('.bar-container[data-volume]')
     this.$volumeContainer = $layer.find('.drawer-container[data-volume]')
-    this.$volumeIcon = $layer.find('.drawer-icon[data-volume]')
+    this.$volumeIcon = $('.volume-button[data-volume]')
     this.$volumeBarBackground = this.$el.find('.bar-background[data-volume]')
     this.$volumeBarFill = this.$el.find('.bar-fill-1[data-volume]')
     this.$volumeBarScrubber = this.$el.find('.bar-scrubber[data-volume]')
     this.$hdIndicator = this.$el.find('button.media-control-button[data-hd-indicator]')
     this.$statusMember = this.$el.find('.members-number.status-block')
+    this.$statusDate = this.$('.current-date.status-block')
     this.resetIndicators()
     this.initializeIcons()
   }
