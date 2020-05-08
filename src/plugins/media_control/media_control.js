@@ -19,7 +19,7 @@ import './public/media-control.scss'
 import mediaControlHTML from './public/media-control.html'
 import { SvgIcons } from '../../base/utils'
 
-const startTimeStamp = Date.parse('2020-05-09T07:00:00.000+03:00')
+const initTimeStamp = Date.parse('2020-05-09T02:00:00.000+03:00')
 
 export default class MediaControl extends UICorePlugin {
   get name() { return 'media_control' }
@@ -73,16 +73,16 @@ export default class MediaControl extends UICorePlugin {
     this.persistConfig = this.options.persistConfig
     this.currentPositionValue = null
     this.currentDurationValue = null
-    this.currentDate = new Date(startTimeStamp)
     this.keepVisible = false
     this.fullScreenOnVideoTagSupported = null // unknown
     this.setInitialVolume()
+
     this.settings = {
       left: ['play', 'stop', 'pause'],
       right: ['volume'],
       default: ['position', 'seekbar', 'duration']
     }
-    this.participantsRatio = this.options.participantsRatio || 0.6667
+    this.participantsRatio = this.options.participantsRatio || 0.72875
     this.kibo = new Kibo(this.options.focusElement)
     this.bindKeyEvents()
 
@@ -169,8 +169,26 @@ export default class MediaControl extends UICorePlugin {
     this.container && this.container.stop()
   }
 
+  setStartStamp(test) {
+    const url = this.options.source
+    let match = url.match(/(\d\d)-(\d\d)-(\d\d)-(\d\d)/)
+    if (!match) {
+      this.startTimeStamp = null
+      return
+    }
+    test && test.length && (match = ['',...test])
+    const day = match[1]
+    const month = match[2]
+    const hour = match[3]
+    const minute = match[4]
+    console.log(`2020-${month}-${day}T${hour}:${minute}:00.000+03:00`) // eslint-disable-line
+    this.startTimeStamp = Date.parse(`2020-${month}-${day}T${hour}:${minute}:00.000+03:00`)
+
+    this.currentDate = new Date(this.startTimeStamp)
+  }
+
   setInitialVolume() {
-    const initialVolume = (this.persistConfig) ? Config.restore('volume') : 100
+    const initialVolume = 50
     const options = this.container && this.container.options || this.options
     this.setVolume(options.mute ? 0 : initialVolume, true)
   }
@@ -249,10 +267,10 @@ export default class MediaControl extends UICorePlugin {
     let icon = this.core.isFullscreen() ? SvgIcons.exitFullscreen : SvgIcons.fullscreen
     this.$fullscreenToggle.append(icon)
     this.applyButtonStyle(this.$fullscreenToggle)
-    this.$el[size.width <= 850 ? 'addClass' : 'removeClass']('w850') 
+    this.$el[size.width <= 850 ? 'addClass' : 'removeClass']('w850')
     this.$el[size.width <= 550 ? 'addClass' : 'removeClass']('w550')
     this.$el[size.width <= 460 ? 'addClass' : 'removeClass']('w460')
-    this.$el[size.width <= 400 ? 'addClass' : 'removeClass']('w400') 
+    this.$el[size.width <= 400 ? 'addClass' : 'removeClass']('w400')
   }
 
   togglePlayPause() {
@@ -362,6 +380,7 @@ export default class MediaControl extends UICorePlugin {
     this.fullScreenOnVideoTagSupported = null
     Mediator.off(`${this.options.playerId}:${Events.PLAYER_RESIZE}`, this.playerResize, this)
     this.bindEvents()
+    this.setStartStamp()
     // set the new container to match the volume of the last one
     this.setInitialVolume()
     this.changeTogglePlay()
@@ -399,14 +418,16 @@ export default class MediaControl extends UICorePlugin {
 
     this.currentPositionValue = position
     this.currentDurationValue = timeProgress.total
-    this.currentDate.setTime(startTimeStamp + (position * 1000))
-    this.renderStatus()
+    if (this.startTimeStamp) {
+      this.currentDate.setTime(this.startTimeStamp + (position * 1000))
+      this.renderStatus()
+    }
     this.renderSeekBar()
   }
 
-  renderStatus () {
-    let time = parseInt(this.currentPositionValue) // seconds
-    let members = parseInt(time * this.participantsRatio)+''
+  renderStatus() {
+    let time = parseInt((this.startTimeStamp - initTimeStamp) / 1000) + parseInt(this.currentPositionValue) // seconds
+    let members = parseInt(time * this.participantsRatio) + ''
     members = members.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')
     const wordEnding = (n) => {
       let ending = ''
@@ -419,14 +440,6 @@ export default class MediaControl extends UICorePlugin {
     const hour = ('0' + this.currentDate.getHours()).slice(-2)
     const minute = ('0' + this.currentDate.getMinutes()).slice(-2)
     this.$statusDate.text(`${day} мая ${hour}:${minute}`)
-    // Убрано уз макета
-    // const distance = +(0.0012 * time).toFixed(1) // kilometers
-    // time = parseInt(time / 60) // minutes
-    // const minutes = time % 60
-    // const hours = parseInt(time / 60)
-    // this.$statusDistance.text(`
-    //   ...идут ${hours}ч ${minutes}мин и прошли ${distance}км
-    // `)
   }
   renderSeekBar() {
     // this will be triggered as soon as these become available
@@ -456,7 +469,7 @@ export default class MediaControl extends UICorePlugin {
     let pos
     if (event) {
       if (event.target.className === 'bar-scrubber') return
-      const offsetX = event.pageX - this.$seekBarContainer.offset().left 
+      const offsetX = event.pageX - this.$seekBarContainer.offset().left
       pos = offsetX / this.$seekBarContainer.width() * 100
     } else {
       pos = this.scrubberOffset / this.$seekBarSizeContainer.width() * 100
@@ -646,7 +659,7 @@ export default class MediaControl extends UICorePlugin {
     this.bindKeyAndShow('shift right', () => this.seekRelative(10))
     this.bindKeyAndShow('shift ctrl left', () => this.seekRelative(-15))
     this.bindKeyAndShow('shift ctrl right', () => this.seekRelative(15))
-    const keys = ['1','2','3','4','5','6','7','8','9','0']
+    const keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
     keys.forEach((i) => {
       this.bindKeyAndShow(i, () => {
         this.settings.seekEnabled && this.container && this.container.seekPercentage(i * 10)
@@ -663,7 +676,7 @@ export default class MediaControl extends UICorePlugin {
       this.kibo.off('shift right')
       this.kibo.off('shift ctrl left')
       this.kibo.off('shift ctrl right')
-      this.kibo.off(['1','2','3','4','5','6','7','8','9','0'])
+      this.kibo.off(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'])
     }
   }
 
@@ -729,9 +742,9 @@ export default class MediaControl extends UICorePlugin {
     // Display mute/unmute icon only if Safari version >= 10
     if (Browser.isSafari && Browser.isMobile) {
       if (Browser.version < 10)
-        this.$volumeContainer.css('display','none')
+        this.$volumeContainer.css('display', 'none')
       else
-        this.$volumeBarContainer.css('display','none')
+        this.$volumeBarContainer.css('display', 'none')
 
     }
 

@@ -16,7 +16,7 @@ $padding-small: 10px;
   height: 100%;
   z-index: 9999;
   pointer-events: none;
-  transition: opacity .2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
 
   &.media-control-hide {
     opacity: 0;
@@ -246,7 +246,8 @@ $padding-small: 10px;
         position: relative;
         height: 100%;
         width: calc(100% - 50px);
-        border-radius: inherit;
+        border-bottom-left-radius: inherit;
+        border-top-left-radius: inherit;
       }
 
       .bar-background[data-seekbar] {

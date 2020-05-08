@@ -275,6 +275,41 @@ exports.default = function () {
 
 /***/ }),
 
+/***/ "./node_modules/babel-runtime/helpers/defineProperty.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/babel-runtime/helpers/defineProperty.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _defineProperty = __webpack_require__(/*! ../core-js/object/define-property */ "./node_modules/babel-runtime/core-js/object/define-property.js");
+
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (obj, key, value) {
+  if (key in obj) {
+    (0, _defineProperty2.default)(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+};
+
+/***/ }),
+
 /***/ "./node_modules/babel-runtime/helpers/extends.js":
 /*!*******************************************************!*\
   !*** ./node_modules/babel-runtime/helpers/extends.js ***!
@@ -4699,7 +4734,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "div.player-error-screen {\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  color: #CCCACA;\n  position: absolute;\n  top: 0;\n  height: 100%;\n  width: 100%;\n  background-color: rgba(0, 0, 0, 0.7);\n  z-index: 2000;\n  display: -ms-flexbox;\n  display: flex;\n  -ms-flex-direction: column;\n      flex-direction: column;\n  -ms-flex-pack: center;\n      justify-content: center; }\n  div.player-error-screen__content[data-error-screen] {\n    font-size: 14px;\n    color: #CCCACA;\n    margin-top: 45px; }\n  div.player-error-screen__title[data-error-screen] {\n    font-weight: bold;\n    line-height: 30px;\n    font-size: 18px; }\n  div.player-error-screen__message[data-error-screen] {\n    width: 90%;\n    margin: 0 auto; }\n  div.player-error-screen__code[data-error-screen] {\n    font-size: 13px;\n    margin-top: 15px; }\n  div.player-error-screen__reload {\n    cursor: pointer;\n    width: 30px;\n    margin: 15px auto 0; }\n", ""]);
+exports.push([module.i, ".clappr-error-handler[data-clappr-error-handler] {\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n  position: absolute;\n  z-index: 999;\n  width: 100%;\n  height: 100%;\n  background-color: #0007;\n  padding-top: 20%;\n  text-align: center;\n  font-weight: bold;\n  text-shadow: 1px 1px #000;\n  color: #fff;\n  background-size: cover; }\n  .clappr-error-handler[data-clappr-error-handler] h2.text {\n    font-size: 200%; }\n  .clappr-error-handler[data-clappr-error-handler] p {\n    font-size: 120%;\n    margin: 15px; }\n", ""]);
 
 // exports
 
@@ -4719,7 +4754,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "[data-player] .cc-controls[data-cc-controls],\n[data-player] .cc-controls[data-cc-controls].available {\n  display: none; }\n\n.media-control-notransition {\n  transition: none !important; }\n\n.media-control[data-media-control] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  z-index: 9999;\n  pointer-events: none;\n  transition: opacity .2s ease-in-out; }\n  .media-control[data-media-control].media-control-hide {\n    opacity: 0; }\n  .media-control[data-media-control] .row {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-wrap: nowrap;\n        flex-wrap: nowrap;\n    -ms-flex-pack: justify;\n        justify-content: space-between; }\n  .media-control[data-media-control] .logo {\n    position: absolute;\n    left: 10px;\n    top: 10px; }\n  .media-control[data-media-control] .buttons-container {\n    position: absolute;\n    bottom: 22px;\n    right: 22px; }\n    .media-control[data-media-control] .buttons-container button {\n      display: inline-block;\n      pointer-events: initial;\n      width: 46px;\n      height: 46px;\n      border-radius: 8px;\n      border: none;\n      padding: 10px;\n      margin-left: 10px;\n      background: rgba(71, 71, 71, 0.4);\n      -webkit-backdrop-filter: blur(54px);\n              backdrop-filter: blur(54px);\n      outline: none; }\n      .media-control[data-media-control] .buttons-container button svg {\n        width: 100%;\n        height: 100%; }\n      .media-control[data-media-control] .buttons-container button:hover svg {\n        opacity: 0.7; }\n      .media-control[data-media-control] .buttons-container button:active svg {\n        opacity: 0.5; }\n    .media-control[data-media-control] .buttons-container .volume-button[data-volume] svg g.path-muted {\n      display: none; }\n    .media-control[data-media-control] .buttons-container .volume-button[data-volume].muted svg g.path-muted {\n      display: initial; }\n  .media-control[data-media-control].dragging {\n    pointer-events: auto;\n    cursor: grabbing !important;\n    cursor: url(" + escape(__webpack_require__(/*! ./closed-hand.cur */ "./src/plugins/media_control/public/closed-hand.cur")) + "), move; }\n    .media-control[data-media-control].dragging * {\n      cursor: grabbing !important;\n      cursor: url(" + escape(__webpack_require__(/*! ./closed-hand.cur */ "./src/plugins/media_control/public/closed-hand.cur")) + "), move; }\n    .media-control[data-media-control].dragging .media-control-layer[data-controls]\n.bar-container[data-seekbar]\n.bar-scrubber[data-seekbar] {\n      background-color: #c62b34; }\n  .media-control[data-media-control] .media-control-icon {\n    line-height: 0;\n    letter-spacing: 0;\n    color: #fff;\n    opacity: 0.5;\n    vertical-align: middle;\n    text-align: left;\n    transition: all 0.1s ease; }\n  .media-control[data-media-control] .media-control-icon:hover {\n    color: white;\n    opacity: 0.75;\n    text-shadow: rgba(255, 255, 255, 0.8) 0 0 5px; }\n  .media-control[data-media-control] .media-control-layer[data-controls] {\n    position: absolute;\n    bottom: 22px;\n    left: 22px;\n    width: 680px;\n    padding: 10px;\n    pointer-events: auto;\n    background: rgba(71, 71, 71, 0.4);\n    color: white;\n    /* Note: backdrop-filter has minimal browser support */\n    -webkit-backdrop-filter: blur(54px);\n            backdrop-filter: blur(54px);\n    border-radius: 10px;\n    transition: bottom 0.4s ease-out; }\n    .media-control[data-media-control] .media-control-layer[data-controls] .status-block {\n      line-height: 35px; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .status-block.members-number {\n        font-size: 35px; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .status-block.current-date {\n        font-size: 20px; }\n    .media-control[data-media-control] .media-control-layer[data-controls] .media-control-center-panel[data-media-control] {\n      position: relative;\n      padding: 4px 0;\n      text-align: center;\n      line-height: 32px; }\n    .media-control[data-media-control] .media-control-layer[data-controls] .media-control-layer-header {\n      padding: 10px 0;\n      -ms-flex-align: end;\n          align-items: flex-end; }\n    .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button {\n      background-color: transparent;\n      border: 0;\n      margin: 0 6px;\n      padding: 0;\n      cursor: pointer;\n      display: inline-block;\n      width: 32px;\n      height: 100%; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button svg {\n        width: 100%;\n        height: 22px; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button:focus {\n        outline: none; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-play] {\n        float: left;\n        height: 100%; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-pause] {\n        float: left;\n        height: 100%; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-stop] {\n        float: left;\n        height: 100%; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-fullscreen] {\n        float: right;\n        background-color: transparent;\n        border: 0;\n        height: 100%; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-hd-indicator] {\n        background-color: transparent;\n        border: 0;\n        cursor: default;\n        display: none;\n        float: right;\n        height: 100%; }\n        .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-hd-indicator].enabled {\n          display: block;\n          opacity: 1; }\n          .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-hd-indicator].enabled:hover {\n            opacity: 1;\n            text-shadow: none; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-playpause] {\n        float: left; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-playstop] {\n        float: left; }\n    .media-control[data-media-control] .media-control-layer[data-controls] .media-control-indicator {\n      display: none; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .media-control-indicator[data-position], .media-control[data-media-control] .media-control-layer[data-controls] .media-control-indicator[data-duration] {\n        display: block;\n        height: 100%;\n        font-size: 12px;\n        white-space: nowrap;\n        color: white;\n        cursor: default;\n        pointer-events: none; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .media-control-indicator[data-duration] {\n        color: rgba(255, 255, 255, 0.5);\n        margin-right: 6px; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .media-control-indicator[data-duration]:before {\n          content: \"|\";\n          margin-right: 7px; }\n    .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] {\n      position: relative;\n      height: 25px;\n      border-radius: 3px;\n      background-color: #ffffff33;\n      cursor: pointer; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-size-container[data-seekbar] {\n        position: relative;\n        height: 100%;\n        width: calc(100% - 50px);\n        border-radius: inherit; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-background[data-seekbar] {\n        width: 100%;\n        height: 100%;\n        border-radius: inherit;\n        overflow: hidden; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-background[data-seekbar] .bar-fill-2[data-seekbar] {\n          height: 100%;\n          background-color: white;\n          transition: all 0.1s ease-out; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar]:hover .bar-background[data-seekbar] .bar-hover[data-seekbar] {\n        opacity: 1; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar].seek-disabled {\n        cursor: default; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar].seek-disabled:hover .bar-background[data-seekbar] .bar-hover[data-seekbar] {\n          opacity: 0; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-scrubber[data-seekbar] {\n        position: absolute;\n        top: -4px;\n        bottom: -4px;\n        left: 0;\n        width: 50px;\n        background-color: #c62b34;\n        box-shadow: 0px 6px 18px rgba(49, 60, 42, 0.4);\n        border-radius: 4px;\n        opacity: 1;\n        transition: all 0.1s ease-out;\n        z-index: 10; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-scrubber[data-seekbar]:hover {\n          background-color: #b91d26; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-scrubber[data-seekbar] .bar-scrubber-icon[data-seekbar] {\n          position: absolute;\n          left: 6px;\n          top: 6px;\n          width: 8px;\n          height: 8px;\n          border-radius: 10px;\n          box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.2);\n          background-color: white; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-duration[data-seekbar] {\n        position: absolute;\n        top: 0;\n        right: 5px;\n        height: 100%;\n        font-size: 12px;\n        line-height: 24px;\n        color: white;\n        z-index: 9; }\n    .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] {\n      height: 50%;\n      position: relative;\n      cursor: pointer;\n      box-sizing: border-box; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .drawer-icon-container[data-volume] {\n        float: left;\n        height: 100%; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] {\n        float: left;\n        position: relative;\n        overflow: hidden;\n        top: 5px;\n        width: 44px;\n        height: 15px;\n        padding: 3px 0;\n        padding-left: 4px;\n        transition: width 0.2s ease-out; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume].volume-bar-hide {\n          width: 0;\n          height: 11px;\n          top: 3px;\n          padding: 0; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .bar-background[data-volume] {\n          height: 1px;\n          position: relative;\n          top: 7px;\n          margin: 0 3px;\n          background-color: #666666; }\n          .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .bar-background[data-volume] .bar-fill-1[data-volume] {\n            position: absolute;\n            top: 0;\n            left: 0;\n            width: 0;\n            height: 100%;\n            background-color: #c2c2c2;\n            transition: all 0.1s ease-out; }\n          .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .bar-background[data-volume] .bar-fill-2[data-volume] {\n            position: absolute;\n            top: 0;\n            left: 0;\n            width: 0;\n            height: 100%;\n            background-color: #005aff;\n            transition: all 0.1s ease-out; }\n          .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .bar-background[data-volume] .bar-hover[data-volume] {\n            opacity: 0;\n            position: absolute;\n            top: -3px;\n            width: 5px;\n            height: 7px;\n            background-color: rgba(255, 255, 255, 0.5);\n            transition: opacity 0.1s ease; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .bar-scrubber[data-volume] {\n          position: absolute;\n          transform: translateX(-50%);\n          top: 0px;\n          left: 0;\n          width: 20px;\n          height: 20px;\n          opacity: 1;\n          transition: all 0.1s ease-out; }\n          .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .bar-scrubber[data-volume] .bar-scrubber-icon[data-volume] {\n            position: absolute;\n            left: 6px;\n            top: 6px;\n            width: 8px;\n            height: 8px;\n            border-radius: 10px;\n            box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.2);\n            background-color: white; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .segmented-bar-element[data-volume] {\n          float: left;\n          width: 4px;\n          padding-left: 2px;\n          height: 100%;\n          opacity: 0.5;\n          box-shadow: inset 2px 0 0 white;\n          transition: transform 0.2s ease-out; }\n          .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .segmented-bar-element[data-volume].fill {\n            box-shadow: inset 2px 0 0 #fff;\n            opacity: 1; }\n          .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .segmented-bar-element[data-volume]:nth-of-type(1) {\n            padding-left: 0; }\n          .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .segmented-bar-element[data-volume]:hover {\n            transform: scaleY(1.5); }\n  .media-control[data-media-control].w320 .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume].volume-bar-hide {\n    width: 0;\n    height: 12px;\n    top: 9px;\n    padding: 0; }\n  .media-control[data-media-control].w850 .buttons-container {\n    bottom: initial;\n    top: 22px; }\n  .media-control[data-media-control].w850 .media-control-layer[data-controls] {\n    right: 22px;\n    width: initial; }\n  .media-control[data-media-control].w550 .media-control-layer[data-controls] .status-block {\n    line-height: 30px; }\n    .media-control[data-media-control].w550 .media-control-layer[data-controls] .status-block.members-number {\n      font-size: 30px; }\n    .media-control[data-media-control].w550 .media-control-layer[data-controls] .status-block.current-date {\n      font-size: 15px; }\n  .media-control[data-media-control].w460 .media-control-layer[data-controls] {\n    right: 10px;\n    left: 10px;\n    bottom: 10px; }\n    .media-control[data-media-control].w460 .media-control-layer[data-controls] .media-control-layer-header {\n      padding: 5px 0; }\n    .media-control[data-media-control].w460 .media-control-layer[data-controls] .status-block {\n      line-height: 25px; }\n      .media-control[data-media-control].w460 .media-control-layer[data-controls] .status-block.members-number {\n        font-size: 25px; }\n      .media-control[data-media-control].w460 .media-control-layer[data-controls] .status-block.current-date {\n        font-size: 12px; }\n  .media-control[data-media-control].w460 .buttons-container {\n    top: 10px;\n    right: 10px; }\n  .media-control[data-media-control].w400 .media-control-layer[data-controls] {\n    padding: 5px; }\n    .media-control[data-media-control].w400 .media-control-layer[data-controls] .media-control-layer-header {\n      padding: 5px 0; }\n    .media-control[data-media-control].w400 .media-control-layer[data-controls] .status-block {\n      line-height: 18px; }\n      .media-control[data-media-control].w400 .media-control-layer[data-controls] .status-block.members-number {\n        font-size: 18px; }\n", ""]);
+exports.push([module.i, "[data-player] .cc-controls[data-cc-controls],\n[data-player] .cc-controls[data-cc-controls].available {\n  display: none; }\n\n.media-control-notransition {\n  transition: none !important; }\n\n.media-control[data-media-control] {\n  position: absolute;\n  width: 100%;\n  height: 100%;\n  z-index: 9999;\n  pointer-events: none;\n  transition: opacity 0.2s ease-in-out; }\n  .media-control[data-media-control].media-control-hide {\n    opacity: 0; }\n  .media-control[data-media-control] .row {\n    display: -ms-flexbox;\n    display: flex;\n    -ms-flex-direction: row;\n        flex-direction: row;\n    -ms-flex-wrap: nowrap;\n        flex-wrap: nowrap;\n    -ms-flex-pack: justify;\n        justify-content: space-between; }\n  .media-control[data-media-control] .logo {\n    position: absolute;\n    left: 10px;\n    top: 10px; }\n  .media-control[data-media-control] .buttons-container {\n    position: absolute;\n    bottom: 22px;\n    right: 22px; }\n    .media-control[data-media-control] .buttons-container button {\n      display: inline-block;\n      pointer-events: initial;\n      width: 46px;\n      height: 46px;\n      border-radius: 8px;\n      border: none;\n      padding: 10px;\n      margin-left: 10px;\n      background: rgba(71, 71, 71, 0.4);\n      -webkit-backdrop-filter: blur(54px);\n              backdrop-filter: blur(54px);\n      outline: none; }\n      .media-control[data-media-control] .buttons-container button svg {\n        width: 100%;\n        height: 100%; }\n      .media-control[data-media-control] .buttons-container button:hover svg {\n        opacity: 0.7; }\n      .media-control[data-media-control] .buttons-container button:active svg {\n        opacity: 0.5; }\n    .media-control[data-media-control] .buttons-container .volume-button[data-volume] svg g.path-muted {\n      display: none; }\n    .media-control[data-media-control] .buttons-container .volume-button[data-volume].muted svg g.path-muted {\n      display: initial; }\n  .media-control[data-media-control].dragging {\n    pointer-events: auto;\n    cursor: grabbing !important;\n    cursor: url(" + escape(__webpack_require__(/*! ./closed-hand.cur */ "./src/plugins/media_control/public/closed-hand.cur")) + "), move; }\n    .media-control[data-media-control].dragging * {\n      cursor: grabbing !important;\n      cursor: url(" + escape(__webpack_require__(/*! ./closed-hand.cur */ "./src/plugins/media_control/public/closed-hand.cur")) + "), move; }\n    .media-control[data-media-control].dragging .media-control-layer[data-controls]\n.bar-container[data-seekbar]\n.bar-scrubber[data-seekbar] {\n      background-color: #c62b34; }\n  .media-control[data-media-control] .media-control-icon {\n    line-height: 0;\n    letter-spacing: 0;\n    color: #fff;\n    opacity: 0.5;\n    vertical-align: middle;\n    text-align: left;\n    transition: all 0.1s ease; }\n  .media-control[data-media-control] .media-control-icon:hover {\n    color: white;\n    opacity: 0.75;\n    text-shadow: rgba(255, 255, 255, 0.8) 0 0 5px; }\n  .media-control[data-media-control] .media-control-layer[data-controls] {\n    position: absolute;\n    bottom: 22px;\n    left: 22px;\n    width: 680px;\n    padding: 10px;\n    pointer-events: auto;\n    background: rgba(71, 71, 71, 0.4);\n    color: white;\n    /* Note: backdrop-filter has minimal browser support */\n    -webkit-backdrop-filter: blur(54px);\n            backdrop-filter: blur(54px);\n    border-radius: 10px;\n    transition: bottom 0.4s ease-out; }\n    .media-control[data-media-control] .media-control-layer[data-controls] .status-block {\n      line-height: 35px; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .status-block.members-number {\n        font-size: 35px; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .status-block.current-date {\n        font-size: 20px; }\n    .media-control[data-media-control] .media-control-layer[data-controls] .media-control-center-panel[data-media-control] {\n      position: relative;\n      padding: 4px 0;\n      text-align: center;\n      line-height: 32px; }\n    .media-control[data-media-control] .media-control-layer[data-controls] .media-control-layer-header {\n      padding: 10px 0;\n      -ms-flex-align: end;\n          align-items: flex-end; }\n    .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button {\n      background-color: transparent;\n      border: 0;\n      margin: 0 6px;\n      padding: 0;\n      cursor: pointer;\n      display: inline-block;\n      width: 32px;\n      height: 100%; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button svg {\n        width: 100%;\n        height: 22px; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button:focus {\n        outline: none; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-play] {\n        float: left;\n        height: 100%; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-pause] {\n        float: left;\n        height: 100%; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-stop] {\n        float: left;\n        height: 100%; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-fullscreen] {\n        float: right;\n        background-color: transparent;\n        border: 0;\n        height: 100%; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-hd-indicator] {\n        background-color: transparent;\n        border: 0;\n        cursor: default;\n        display: none;\n        float: right;\n        height: 100%; }\n        .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-hd-indicator].enabled {\n          display: block;\n          opacity: 1; }\n          .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-hd-indicator].enabled:hover {\n            opacity: 1;\n            text-shadow: none; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-playpause] {\n        float: left; }\n      .media-control[data-media-control] .media-control-layer[data-controls] button.media-control-button[data-playstop] {\n        float: left; }\n    .media-control[data-media-control] .media-control-layer[data-controls] .media-control-indicator {\n      display: none; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .media-control-indicator[data-position], .media-control[data-media-control] .media-control-layer[data-controls] .media-control-indicator[data-duration] {\n        display: block;\n        height: 100%;\n        font-size: 12px;\n        white-space: nowrap;\n        color: white;\n        cursor: default;\n        pointer-events: none; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .media-control-indicator[data-duration] {\n        color: rgba(255, 255, 255, 0.5);\n        margin-right: 6px; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .media-control-indicator[data-duration]:before {\n          content: \"|\";\n          margin-right: 7px; }\n    .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] {\n      position: relative;\n      height: 25px;\n      border-radius: 3px;\n      background-color: #ffffff33;\n      cursor: pointer; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-size-container[data-seekbar] {\n        position: relative;\n        height: 100%;\n        width: calc(100% - 50px);\n        border-bottom-left-radius: inherit;\n        border-top-left-radius: inherit; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-background[data-seekbar] {\n        width: 100%;\n        height: 100%;\n        border-radius: inherit;\n        overflow: hidden; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-background[data-seekbar] .bar-fill-2[data-seekbar] {\n          height: 100%;\n          background-color: white;\n          transition: all 0.1s ease-out; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar]:hover .bar-background[data-seekbar] .bar-hover[data-seekbar] {\n        opacity: 1; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar].seek-disabled {\n        cursor: default; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar].seek-disabled:hover .bar-background[data-seekbar] .bar-hover[data-seekbar] {\n          opacity: 0; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-scrubber[data-seekbar] {\n        position: absolute;\n        top: -4px;\n        bottom: -4px;\n        left: 0;\n        width: 50px;\n        background-color: #c62b34;\n        box-shadow: 0px 6px 18px rgba(49, 60, 42, 0.4);\n        border-radius: 4px;\n        opacity: 1;\n        transition: all 0.1s ease-out;\n        z-index: 10; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-scrubber[data-seekbar]:hover {\n          background-color: #b91d26; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-scrubber[data-seekbar] .bar-scrubber-icon[data-seekbar] {\n          position: absolute;\n          left: 6px;\n          top: 6px;\n          width: 8px;\n          height: 8px;\n          border-radius: 10px;\n          box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.2);\n          background-color: white; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .bar-container[data-seekbar] .bar-duration[data-seekbar] {\n        position: absolute;\n        top: 0;\n        right: 5px;\n        height: 100%;\n        font-size: 12px;\n        line-height: 24px;\n        color: white;\n        z-index: 9; }\n    .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] {\n      height: 50%;\n      position: relative;\n      cursor: pointer;\n      box-sizing: border-box; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .drawer-icon-container[data-volume] {\n        float: left;\n        height: 100%; }\n      .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] {\n        float: left;\n        position: relative;\n        overflow: hidden;\n        top: 5px;\n        width: 44px;\n        height: 15px;\n        padding: 3px 0;\n        padding-left: 4px;\n        transition: width 0.2s ease-out; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume].volume-bar-hide {\n          width: 0;\n          height: 11px;\n          top: 3px;\n          padding: 0; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .bar-background[data-volume] {\n          height: 1px;\n          position: relative;\n          top: 7px;\n          margin: 0 3px;\n          background-color: #666666; }\n          .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .bar-background[data-volume] .bar-fill-1[data-volume] {\n            position: absolute;\n            top: 0;\n            left: 0;\n            width: 0;\n            height: 100%;\n            background-color: #c2c2c2;\n            transition: all 0.1s ease-out; }\n          .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .bar-background[data-volume] .bar-fill-2[data-volume] {\n            position: absolute;\n            top: 0;\n            left: 0;\n            width: 0;\n            height: 100%;\n            background-color: #005aff;\n            transition: all 0.1s ease-out; }\n          .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .bar-background[data-volume] .bar-hover[data-volume] {\n            opacity: 0;\n            position: absolute;\n            top: -3px;\n            width: 5px;\n            height: 7px;\n            background-color: rgba(255, 255, 255, 0.5);\n            transition: opacity 0.1s ease; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .bar-scrubber[data-volume] {\n          position: absolute;\n          transform: translateX(-50%);\n          top: 0px;\n          left: 0;\n          width: 20px;\n          height: 20px;\n          opacity: 1;\n          transition: all 0.1s ease-out; }\n          .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .bar-scrubber[data-volume] .bar-scrubber-icon[data-volume] {\n            position: absolute;\n            left: 6px;\n            top: 6px;\n            width: 8px;\n            height: 8px;\n            border-radius: 10px;\n            box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.2);\n            background-color: white; }\n        .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .segmented-bar-element[data-volume] {\n          float: left;\n          width: 4px;\n          padding-left: 2px;\n          height: 100%;\n          opacity: 0.5;\n          box-shadow: inset 2px 0 0 white;\n          transition: transform 0.2s ease-out; }\n          .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .segmented-bar-element[data-volume].fill {\n            box-shadow: inset 2px 0 0 #fff;\n            opacity: 1; }\n          .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .segmented-bar-element[data-volume]:nth-of-type(1) {\n            padding-left: 0; }\n          .media-control[data-media-control] .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume] .segmented-bar-element[data-volume]:hover {\n            transform: scaleY(1.5); }\n  .media-control[data-media-control].w320 .media-control-layer[data-controls] .drawer-container[data-volume] .bar-container[data-volume].volume-bar-hide {\n    width: 0;\n    height: 12px;\n    top: 9px;\n    padding: 0; }\n  .media-control[data-media-control].w850 .buttons-container {\n    bottom: initial;\n    top: 22px; }\n  .media-control[data-media-control].w850 .media-control-layer[data-controls] {\n    right: 22px;\n    width: initial; }\n  .media-control[data-media-control].w550 .media-control-layer[data-controls] .status-block {\n    line-height: 30px; }\n    .media-control[data-media-control].w550 .media-control-layer[data-controls] .status-block.members-number {\n      font-size: 30px; }\n    .media-control[data-media-control].w550 .media-control-layer[data-controls] .status-block.current-date {\n      font-size: 15px; }\n  .media-control[data-media-control].w460 .media-control-layer[data-controls] {\n    right: 10px;\n    left: 10px;\n    bottom: 10px; }\n    .media-control[data-media-control].w460 .media-control-layer[data-controls] .media-control-layer-header {\n      padding: 5px 0; }\n    .media-control[data-media-control].w460 .media-control-layer[data-controls] .status-block {\n      line-height: 25px; }\n      .media-control[data-media-control].w460 .media-control-layer[data-controls] .status-block.members-number {\n        font-size: 25px; }\n      .media-control[data-media-control].w460 .media-control-layer[data-controls] .status-block.current-date {\n        font-size: 12px; }\n  .media-control[data-media-control].w460 .buttons-container {\n    top: 10px;\n    right: 10px; }\n  .media-control[data-media-control].w400 .media-control-layer[data-controls] {\n    padding: 5px; }\n    .media-control[data-media-control].w400 .media-control-layer[data-controls] .media-control-layer-header {\n      padding: 5px 0; }\n    .media-control[data-media-control].w400 .media-control-layer[data-controls] .status-block {\n      line-height: 18px; }\n      .media-control[data-media-control].w400 .media-control-layer[data-controls] .status-block.members-number {\n        font-size: 18px; }\n", ""]);
 
 // exports
 
@@ -34613,6 +34648,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _defineProperty2 = __webpack_require__(/*! babel-runtime/helpers/defineProperty */ "./node_modules/babel-runtime/helpers/defineProperty.js");
+
+var _defineProperty3 = _interopRequireDefault(_defineProperty2);
+
 var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ "./node_modules/babel-runtime/helpers/classCallCheck.js");
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -34641,12 +34680,6 @@ var _template = __webpack_require__(/*! ../../base/template */ "./src/base/templ
 
 var _template2 = _interopRequireDefault(_template);
 
-var _error = __webpack_require__(/*! ../../components/error/ */ "./src/components/error/index.js");
-
-var _error2 = _interopRequireDefault(_error);
-
-var _utils = __webpack_require__(/*! ../../base/utils */ "./src/base/utils.js");
-
 var _error_screen = __webpack_require__(/*! ./public/error_screen.html */ "./src/plugins/error_screen/public/error_screen.html");
 
 var _error_screen2 = _interopRequireDefault(_error_screen);
@@ -34655,12 +34688,21 @@ __webpack_require__(/*! ./public/error_screen.scss */ "./src/plugins/error_scree
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// import PlayerError from '../../components/error/'
+// import { SvgIcons } from '../../base/utils'
 var ErrorScreen = function (_UICorePlugin) {
   (0, _inherits3.default)(ErrorScreen, _UICorePlugin);
   (0, _createClass3.default)(ErrorScreen, [{
     key: 'name',
     get: function get() {
-      return 'error_screen';
+      return 'clappr-error-handler';
+    }
+  }, {
+    key: 'attributes',
+    get: function get() {
+      return (0, _defineProperty3.default)({
+        class: this.name
+      }, 'data-' + this.name, '');
     }
   }, {
     key: 'template',
@@ -34670,15 +34712,12 @@ var ErrorScreen = function (_UICorePlugin) {
   }, {
     key: 'container',
     get: function get() {
-      return this.core.getCurrentContainer();
+      return this.core.activeContainer;
     }
   }, {
-    key: 'attributes',
+    key: 'playback',
     get: function get() {
-      return {
-        'class': 'player-error-screen',
-        'data-error-screen': ''
-      };
+      return this.core.activePlayback;
     }
   }]);
 
@@ -34689,6 +34728,25 @@ var ErrorScreen = function (_UICorePlugin) {
 
     var _this = (0, _possibleConstructorReturn3.default)(this, _UICorePlugin.call(this, core));
 
+    var opts = _this.options.clapprErrorHandler || {};
+    _this.quiet = !!opts.quiet;
+    _this.retryDelay = opts.retryDelay || 3;
+    _this.text = opts.text || 'Что-то пошло не так с видео. Попробуем исправить.';
+    _this.image = opts.image || null;
+    if (opts.onRetry) {
+      if (typeof opts.onRetry === 'function') {
+        _this.callBack = opts.onRetry;
+      } else {
+        _this.callBack = null;
+        console.error(TypeError('clapprErrorHandler.onRetry must be a function')); // eslint-disable-line
+      }
+    } else {
+      _this.callBack = null;
+    }
+
+    _this.$el.html(_this.template(_this));
+    _this.image && _this.$el.css({ 'background-image': 'url(' + _this.image + ')' });
+    _this.$retryTimer = _this.$('.retry-timer');
     if (_this.options.disableErrorScreen) return _ret = _this.disable(), (0, _possibleConstructorReturn3.default)(_this, _ret);
     return _this;
   }
@@ -34698,68 +34756,104 @@ var ErrorScreen = function (_UICorePlugin) {
     this.listenTo(this.core, _events2.default.CORE_ACTIVE_CONTAINER_CHANGED, this.onContainerChanged);
   };
 
-  ErrorScreen.prototype.bindReload = function bindReload() {
-    this.reloadButton = this.$el.find('.player-error-screen__reload');
-    this.reloadButton && this.reloadButton.on('click', this.reload.bind(this));
-  };
+  // bindReload() {
+  //   this.reloadButton = this.$el.find('.player-error-screen__reload')
+  //   this.reloadButton && this.reloadButton.on('click', this.reload.bind(this))
+  // }
 
-  ErrorScreen.prototype.reload = function reload() {
-    var _this2 = this;
-
-    this.listenToOnce(this.core, _events2.default.CORE_READY, function () {
-      return _this2.container.play();
-    });
-    this.core.load(this.options.sources, this.options.mimeType);
-    this.unbindReload();
-  };
-
-  ErrorScreen.prototype.unbindReload = function unbindReload() {
-    this.reloadButton && this.reloadButton.off('click');
-  };
+  // unbindReload() {
+  //   this.reloadButton && this.reloadButton.off('click')
+  // }
 
   ErrorScreen.prototype.onContainerChanged = function onContainerChanged() {
-    this.err = null;
-    this.unbindReload();
+    // this.err = null
+    this.listenTo(this.playback, _events2.default.PLAYBACK_ERROR, this.onError);
+
+    // this.unbindReload()
     this.hide();
   };
 
   ErrorScreen.prototype.onError = function onError() {
-    var err = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var _this2 = this;
 
-    if (err.level === _error2.default.Levels.FATAL) {
-      this.err = err;
-      this.container.disableMediaControl();
-      this.container.stop();
-      this.show();
+    var e = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    if (this.isErrorFatal(e)) {
+      this.quiet || this.show();
+      this.switchClickToPause('disable');
+      var tid = void 0;
+      var t = this.retryDelay;
+      var retry = function retry() {
+        clearTimeout(tid);
+        if (t === 0) {
+          _this2.switchClickToPause('enable');
+          if (_this2.callBack) _this2.callBack(e);else _this2.restart();
+          _this2.hide();
+          return;
+        }
+        _this2.$retryTimer.text(t);
+        t--;
+        tid = setTimeout(retry, 1000);
+      };
+      retry();
     }
   };
 
-  ErrorScreen.prototype.show = function show() {
-    this.render();
-    this.$el.show();
+  ErrorScreen.prototype.restart = function restart() {
+    if (!this.container) return;
+    this.container.stop();
+    this.container.play();
+  };
+
+  ErrorScreen.prototype.reload = function reload() {
+    var _this3 = this;
+
+    this.listenToOnce(this.core, _events2.default.CORE_READY, function () {
+      return _this3.container.play();
+    });
+    this.core.load(this.options.sources, this.options.mimeType);
+    // this.unbindReload()
+  };
+
+  ErrorScreen.prototype.isErrorFatal = function isErrorFatal(e) {
+    if (!e) return false;
+    if (e.level === 'FATAL') return true;
+    if (e.data && e.data.fatal === true) return true;
+  };
+
+  ErrorScreen.prototype.switchClickToPause = function switchClickToPause(method) {
+    if (this.container) {
+      var plugin = this.container.getPlugin('click_to_pause');
+      plugin[method]();
+    }
   };
 
   ErrorScreen.prototype.hide = function hide() {
-    this.$el.hide();
+    this.$el.remove();
   };
 
-  ErrorScreen.prototype.render = function render() {
-    if (!this.err) return;
-
-    this.$el.html(this.template({
-      title: this.err.UI.title,
-      message: this.err.UI.message,
-      code: this.err.code,
-      icon: this.err.UI.icon || '',
-      reloadIcon: _utils.SvgIcons.reload
-    }));
-
-    this.core.$el.append(this.el);
-
-    this.bindReload();
-
-    return this;
+  ErrorScreen.prototype.show = function show() {
+    this.core.$el.prepend(this.$el);
   };
+
+  // render() {
+  // if (!this.err) return
+
+  // this.$el.html(this.template({
+  //   title: this.err.UI.title,
+  //   message: this.err.UI.message,
+  //   code: this.err.code,
+  //   icon: this.err.UI.icon || '',
+  //   reloadIcon: SvgIcons.reload,
+  // }))
+
+  // this.core.$el.append(this.el)
+
+  // this.bindReload()
+
+  // return this
+  // }
+
 
   return ErrorScreen;
 }(_ui_core_plugin2.default);
@@ -34801,7 +34895,7 @@ module.exports = exports['default'];
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"player-error-screen__content\" data-error-screen>\n  <% if (icon) { %>\n  <div class=\"player-error-screen__icon\" data-error-screen><%= icon %></div>\n  <% } %>\n  <div class=\"player-error-screen__title\" data-error-screen><%= title %></div>\n  <div class=\"player-error-screen__message\" data-error-screen><%= message %></div>\n  <div class=\"player-error-screen__code\" data-error-screen>Error code: <%= code %></div>\n  <div class=\"player-error-screen__reload\" data-error-screen><%= reloadIcon %></div>\n</div>\n";
+module.exports = "<h2 class=\"text\"><%=text%></h2>\n<p>Перезапуск через <span class=\"retry-timer\"></span> с.</p>";
 
 /***/ }),
 
@@ -35439,6 +35533,10 @@ var _stringify = __webpack_require__(/*! babel-runtime/core-js/json/stringify */
 
 var _stringify2 = _interopRequireDefault(_stringify);
 
+var _toConsumableArray2 = __webpack_require__(/*! babel-runtime/helpers/toConsumableArray */ "./node_modules/babel-runtime/helpers/toConsumableArray.js");
+
+var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
+
 var _classCallCheck2 = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ "./node_modules/babel-runtime/helpers/classCallCheck.js");
 
 var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
@@ -35503,7 +35601,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * The MediaControl is responsible for displaying the Player controls.
  */
 
-var startTimeStamp = Date.parse('2020-05-09T07:00:00.000+03:00');
+var initTimeStamp = Date.parse('2020-05-09T02:00:00.000+03:00');
 
 var MediaControl = function (_UICorePlugin) {
   (0, _inherits3.default)(MediaControl, _UICorePlugin);
@@ -35586,16 +35684,16 @@ var MediaControl = function (_UICorePlugin) {
     _this.persistConfig = _this.options.persistConfig;
     _this.currentPositionValue = null;
     _this.currentDurationValue = null;
-    _this.currentDate = new Date(startTimeStamp);
     _this.keepVisible = false;
     _this.fullScreenOnVideoTagSupported = null; // unknown
     _this.setInitialVolume();
+
     _this.settings = {
       left: ['play', 'stop', 'pause'],
       right: ['volume'],
       default: ['position', 'seekbar', 'duration']
     };
-    _this.participantsRatio = _this.options.participantsRatio || 0.6667;
+    _this.participantsRatio = _this.options.participantsRatio || 0.72875;
     _this.kibo = new _vendor.Kibo(_this.options.focusElement);
     _this.bindKeyEvents();
 
@@ -35693,8 +35791,26 @@ var MediaControl = function (_UICorePlugin) {
     this.container && this.container.stop();
   };
 
+  MediaControl.prototype.setStartStamp = function setStartStamp(test) {
+    var url = this.options.source;
+    var match = url.match(/(\d\d)-(\d\d)-(\d\d)-(\d\d)/);
+    if (!match) {
+      this.startTimeStamp = null;
+      return;
+    }
+    test && test.length && (match = [''].concat((0, _toConsumableArray3.default)(test)));
+    var day = match[1];
+    var month = match[2];
+    var hour = match[3];
+    var minute = match[4];
+    console.log('2020-' + month + '-' + day + 'T' + hour + ':' + minute + ':00.000+03:00'); // eslint-disable-line
+    this.startTimeStamp = Date.parse('2020-' + month + '-' + day + 'T' + hour + ':' + minute + ':00.000+03:00');
+
+    this.currentDate = new Date(this.startTimeStamp);
+  };
+
   MediaControl.prototype.setInitialVolume = function setInitialVolume() {
-    var initialVolume = this.persistConfig ? _utils.Config.restore('volume') : 100;
+    var initialVolume = 50;
     var options = this.container && this.container.options || this.options;
     this.setVolume(options.mute ? 0 : initialVolume, true);
   };
@@ -35888,6 +36004,7 @@ var MediaControl = function (_UICorePlugin) {
     this.fullScreenOnVideoTagSupported = null;
     _mediator2.default.off(this.options.playerId + ':' + _events2.default.PLAYER_RESIZE, this.playerResize, this);
     this.bindEvents();
+    this.setStartStamp();
     // set the new container to match the volume of the last one
     this.setInitialVolume();
     this.changeTogglePlay();
@@ -35933,13 +36050,15 @@ var MediaControl = function (_UICorePlugin) {
 
     this.currentPositionValue = position;
     this.currentDurationValue = timeProgress.total;
-    this.currentDate.setTime(startTimeStamp + position * 1000);
-    this.renderStatus();
+    if (this.startTimeStamp) {
+      this.currentDate.setTime(this.startTimeStamp + position * 1000);
+      this.renderStatus();
+    }
     this.renderSeekBar();
   };
 
   MediaControl.prototype.renderStatus = function renderStatus() {
-    var time = parseInt(this.currentPositionValue); // seconds
+    var time = parseInt((this.startTimeStamp - initTimeStamp) / 1000) + parseInt(this.currentPositionValue); // seconds
     var members = parseInt(time * this.participantsRatio) + '';
     members = members.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     var wordEnding = function wordEnding(n) {
@@ -35953,14 +36072,6 @@ var MediaControl = function (_UICorePlugin) {
     var hour = ('0' + this.currentDate.getHours()).slice(-2);
     var minute = ('0' + this.currentDate.getMinutes()).slice(-2);
     this.$statusDate.text(day + ' \u043C\u0430\u044F ' + hour + ':' + minute);
-    // Убрано уз макета
-    // const distance = +(0.0012 * time).toFixed(1) // kilometers
-    // time = parseInt(time / 60) // minutes
-    // const minutes = time % 60
-    // const hours = parseInt(time / 60)
-    // this.$statusDistance.text(`
-    //   ...идут ${hours}ч ${minutes}мин и прошли ${distance}км
-    // `)
   };
 
   MediaControl.prototype.renderSeekBar = function renderSeekBar() {
