@@ -35681,6 +35681,7 @@ var MediaControl = function (_UICorePlugin) {
     _this.persistConfig = _this.options.persistConfig;
     _this.currentPositionValue = null;
     _this.currentDurationValue = null;
+    _this.startTimeStamp = null;
     _this.keepVisible = false;
     _this.fullScreenOnVideoTagSupported = null; // unknown
     _this.setInitialVolume();
@@ -36003,7 +36004,7 @@ var MediaControl = function (_UICorePlugin) {
     this.fullScreenOnVideoTagSupported = null;
     _mediator2.default.off(this.options.playerId + ':' + _events2.default.PLAYER_RESIZE, this.playerResize, this);
     this.bindEvents();
-    this.setStartStamp();
+    _browser2.default.isiOS || this.setStartStamp();
     // set the new container to match the volume of the last one
     this.setInitialVolume();
     this.changeTogglePlay();
@@ -36084,6 +36085,7 @@ var MediaControl = function (_UICorePlugin) {
 
     this.setSeekPercentage(this.currentSeekBarPercentage);
 
+    if (!this.startTimeStamp) return;
     var newPosition = (0, _utils.formatTime)(this.currentPositionValue);
     var newDuration = (0, _utils.formatTime)(this.currentDurationValue);
     if (newPosition !== this.displayedPosition) {
@@ -36377,14 +36379,7 @@ var MediaControl = function (_UICorePlugin) {
     var _this10 = this;
 
     var timeout = this.options.hideMediaControlDelay || 2000;
-    // this.settings && this.$el.html(this.template({ settings: this.settings }))
-    this.settings && this.$el.html(this.template({
-      settings: {
-        left: [],
-        right: ['volume'],
-        default: ['seekbar']
-      }
-    }));
+    this.$el.html(this.template({ isiOS: _browser2.default.isiOS }));
     this.createCachedElements();
     this.$playPauseToggle.addClass('paused');
     this.$playStopToggle.addClass('stopped');
@@ -36476,7 +36471,7 @@ module.exports = "<%=baseUrl%>/a8c874b93b3d848f39a71260c57e3863.cur";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row buttons-container\">\n  <button class=\"volume-button\" data-volume></button>\n  <button class=\"media-control-button\" data-fullscreen></button>\n</div>\n<div class=\"media-control-layer\" data-controls>\n  <div class=\"row media-control-layer-header\">\n    <span class=\"members-number status-block\"></span>\n    <span class=\"current-date status-block\"></span>\n  </div>\n  <div class=\"media-control-center-panel\" data-media-control>\n    <div class=\"bar-container\" data-seekbar>\n      <div class=\"bar-duration\" data-seekbar></div>\n      <div class=\"bar-size-container\" data-seekbar>\n        <div class=\"bar-background\" data-seekbar>\n          <div class=\"bar-fill-2\" data-seekbar></div>\n        </div>\n        <div class=\"bar-scrubber\" data-seekbar>\n          <div class=\"media-control-indicator\" data-position></div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
+module.exports = "<div class=\"row buttons-container\">\n  <button class=\"volume-button\" data-volume></button>\n  <button class=\"media-control-button\" data-fullscreen></button>\n</div>\n<div class=\"media-control-layer\" data-controls>\n  <% if (!isiOS) { %>\n  <div class=\"row media-control-layer-header\">\n    <span class=\"members-number status-block\"></span>\n    <span class=\"current-date status-block\"></span>\n  </div>\n  <% } %>\n  <div class=\"media-control-center-panel\" data-media-control>\n    <div class=\"bar-container\" data-seekbar>\n      <div class=\"bar-duration\" data-seekbar></div>\n      <div class=\"bar-size-container\" data-seekbar>\n        <div class=\"bar-background\" data-seekbar>\n          <div class=\"bar-fill-2\" data-seekbar></div>\n        </div>\n        <div class=\"bar-scrubber\" data-seekbar>\n          <div class=\"media-control-indicator\" data-position>LIVE</div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n";
 
 /***/ }),
 

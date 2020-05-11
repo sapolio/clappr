@@ -74,6 +74,7 @@ export default class MediaControl extends UICorePlugin {
     this.persistConfig = this.options.persistConfig
     this.currentPositionValue = null
     this.currentDurationValue = null
+    this.startTimeStamp = null
     this.keepVisible = false
     this.fullScreenOnVideoTagSupported = null // unknown
     this.setInitialVolume()
@@ -381,7 +382,7 @@ export default class MediaControl extends UICorePlugin {
     this.fullScreenOnVideoTagSupported = null
     Mediator.off(`${this.options.playerId}:${Events.PLAYER_RESIZE}`, this.playerResize, this)
     this.bindEvents()
-    this.setStartStamp()
+    Browser.isiOS || this.setStartStamp()
     // set the new container to match the volume of the last one
     this.setInitialVolume()
     this.changeTogglePlay()
@@ -454,6 +455,7 @@ export default class MediaControl extends UICorePlugin {
 
     this.setSeekPercentage(this.currentSeekBarPercentage)
 
+    if (!this.startTimeStamp) return
     const newPosition = formatTime(this.currentPositionValue)
     const newDuration = formatTime(this.currentDurationValue)
     if (newPosition !== this.displayedPosition) {
@@ -721,14 +723,7 @@ export default class MediaControl extends UICorePlugin {
 
   render() {
     const timeout = this.options.hideMediaControlDelay || 2000
-    // this.settings && this.$el.html(this.template({ settings: this.settings }))
-    this.settings && this.$el.html(this.template({
-      settings: {
-        left: [],
-        right: ['volume'],
-        default: ['seekbar']
-      }
-    }))
+    this.$el.html(this.template({ isiOS: Browser.isiOS }))
     this.createCachedElements()
     this.$playPauseToggle.addClass('paused')
     this.$playStopToggle.addClass('stopped')

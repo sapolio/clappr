@@ -3,10 +3,12 @@
   <button class="media-control-button" data-fullscreen></button>
 </div>
 <div class="media-control-layer" data-controls>
+  <% if (!isiOS) { %>
   <div class="row media-control-layer-header">
     <span class="members-number status-block"></span>
     <span class="current-date status-block"></span>
   </div>
+  <% } %>
   <div class="media-control-center-panel" data-media-control>
     <div class="bar-container" data-seekbar>
       <div class="bar-duration" data-seekbar></div>
@@ -15,7 +17,7 @@
           <div class="bar-fill-2" data-seekbar></div>
         </div>
         <div class="bar-scrubber" data-seekbar>
-          <div class="media-control-indicator" data-position></div>
+          <div class="media-control-indicator" data-position>LIVE</div>
         </div>
       </div>
     </div>
