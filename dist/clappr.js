@@ -35598,6 +35598,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 var initTimeStamp = Date.parse('2020-05-09T02:00:00.000+03:00');
+var timeMultiplier = 1.0005;
 
 var MediaControl = function (_UICorePlugin) {
   (0, _inherits3.default)(MediaControl, _UICorePlugin);
@@ -35689,7 +35690,7 @@ var MediaControl = function (_UICorePlugin) {
       right: ['volume'],
       default: ['position', 'seekbar', 'duration']
     };
-    _this.participantsRatio = _this.options.participantsRatio || 0.72875;
+    _this.participantsRatio = _this.options.participantsRatio || 1.38850319356;
     _this.kibo = new _vendor.Kibo(_this.options.focusElement);
     _this.bindKeyEvents();
 
@@ -36046,17 +36047,18 @@ var MediaControl = function (_UICorePlugin) {
     // TODO why should current time ever be negative?
     var position = timeProgress.current < 0 ? timeProgress.total : timeProgress.current;
 
-    this.currentPositionValue = position;
-    this.currentDurationValue = timeProgress.total;
+    this.currentPositionValue = position * timeMultiplier;
+    this.currentDurationValue = timeProgress.total * timeMultiplier;
     if (this.startTimeStamp) {
-      this.currentDate.setTime(this.startTimeStamp + position * 1000);
+      this.currentDate.setTime(this.startTimeStamp + this.currentPositionValue * 1000);
+      this.currentDate.setUTCHours(this.currentDate.getUTCHours() + 3);
       this.renderStatus();
     }
     this.renderSeekBar();
   };
 
   MediaControl.prototype.renderStatus = function renderStatus() {
-    var time = parseInt((this.startTimeStamp - initTimeStamp) / 1000) + parseInt(this.currentPositionValue); // seconds
+    var time = (this.startTimeStamp - initTimeStamp) / 1000 + this.currentPositionValue; // seconds
     var members = parseInt(time * this.participantsRatio) + '';
     members = members.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ');
     var wordEnding = function wordEnding(n) {
@@ -36066,9 +36068,9 @@ var MediaControl = function (_UICorePlugin) {
       return ending;
     };
     this.$statusMember.text(members + ' \u0443\u0447\u0430\u0441\u0442\u043D\u0438\u043A' + wordEnding(members % 10));
-    var day = this.currentDate.getDate();
-    var hour = ('0' + this.currentDate.getHours()).slice(-2);
-    var minute = ('0' + this.currentDate.getMinutes()).slice(-2);
+    var day = this.currentDate.getUTCDate();
+    var hour = ('0' + this.currentDate.getUTCHours()).slice(-2);
+    var minute = ('0' + this.currentDate.getUTCMinutes()).slice(-2);
     this.$statusDate.text(day + ' \u043C\u0430\u044F ' + hour + ':' + minute);
   };
 

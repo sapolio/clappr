@@ -20,6 +20,7 @@ import mediaControlHTML from './public/media-control.html'
 import { SvgIcons } from '../../base/utils'
 
 const initTimeStamp = Date.parse('2020-05-09T02:00:00.000+03:00')
+const timeMultiplier = 1.0005
 
 export default class MediaControl extends UICorePlugin {
   get name() { return 'media_control' }
@@ -82,7 +83,7 @@ export default class MediaControl extends UICorePlugin {
       right: ['volume'],
       default: ['position', 'seekbar', 'duration']
     }
-    this.participantsRatio = this.options.participantsRatio || 0.72875
+    this.participantsRatio = this.options.participantsRatio || 1.38850319356
     this.kibo = new Kibo(this.options.focusElement)
     this.bindKeyEvents()
 
@@ -416,17 +417,18 @@ export default class MediaControl extends UICorePlugin {
     // TODO why should current time ever be negative?
     const position = (timeProgress.current < 0) ? timeProgress.total : timeProgress.current
 
-    this.currentPositionValue = position
-    this.currentDurationValue = timeProgress.total
+    this.currentPositionValue = position * timeMultiplier
+    this.currentDurationValue = timeProgress.total * timeMultiplier
     if (this.startTimeStamp) {
-      this.currentDate.setTime(this.startTimeStamp + (position * 1000))
+      this.currentDate.setTime(this.startTimeStamp + (this.currentPositionValue * 1000))
+      this.currentDate.setUTCHours(this.currentDate.getUTCHours() + 3)
       this.renderStatus()
     }
     this.renderSeekBar()
   }
 
   renderStatus() {
-    let time = parseInt((this.startTimeStamp - initTimeStamp) / 1000) + parseInt(this.currentPositionValue) // seconds
+    let time = (this.startTimeStamp - initTimeStamp) / 1000 + this.currentPositionValue // seconds
     let members = parseInt(time * this.participantsRatio) + ''
     members = members.replace(/(\d)(?=(\d\d\d)+([^\d]|$))/g, '$1 ')
     const wordEnding = (n) => {
@@ -436,9 +438,9 @@ export default class MediaControl extends UICorePlugin {
       return ending
     }
     this.$statusMember.text(`${members} участник${wordEnding(members % 10)}`)
-    const day = this.currentDate.getDate()
-    const hour = ('0' + this.currentDate.getHours()).slice(-2)
-    const minute = ('0' + this.currentDate.getMinutes()).slice(-2)
+    const day = this.currentDate.getUTCDate()
+    const hour = ('0' + this.currentDate.getUTCHours()).slice(-2)
+    const minute = ('0' + this.currentDate.getUTCMinutes()).slice(-2)
     this.$statusDate.text(`${day} мая ${hour}:${minute}`)
   }
   renderSeekBar() {

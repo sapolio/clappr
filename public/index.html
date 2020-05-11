@@ -51,6 +51,7 @@
         <input id="js-link" type="url" placeholder="http://clappr.io/ex-plugin.js" style="width: 200px;">
         <button id="btn-link" onclick="addExternal()">+</button>
       </p>
+      <div id="progress">Current <span class="current"></span> | Total <span class="total"></span></div>
       <div id="output">
         <div id="player-wrapper" class="player"></div>
       </div>
@@ -110,7 +111,7 @@ player.attachTo(playerElement);
           // participantsRatio: 4,
           // hideMediaControl: false,
           // source: urlParams.src || 'http://clappr.io/highline.mp4',
-          source: urlParams.src || '//cache-aventica.cdnvideo.ru/aventica/records/11-05-08-00.m3u8',
+          source: urlParams.src || '//cache-aventica.cdnvideo.ru/aventica/records/11-05-20-00.m3u8',
           // source: urlParams.src || '//cache-aventica.cdnvideo.ru/aventica/records/test1%2020200503t035035.m3u8',
           // poster: urlParams.poster || 'http://clappr.io/poster.png',
           mute: true,
@@ -122,6 +123,18 @@ player.attachTo(playerElement);
           },
           clapprErrorHandler: {
             image: '//playercdn.cdnvideo.ru/aloha/players/polk-poster.jpg',
+          },
+          events: {
+            onReady: function() {
+              const $currentEl = Clappr.$('#progress>.current')
+              const $totalEl = Clappr.$('#progress>.total')
+              const container = this.core.activeContainer
+              const onTimeUpdate = (timeProgress) => {
+                $currentEl.text(timeProgress.current.toFixed(2))
+                $totalEl.text(timeProgress.total.toFixed(2))
+              }
+              this.listenTo(container, Clappr.Events.CONTAINER_TIMEUPDATE, onTimeUpdate)
+            }
           }
         });
 
