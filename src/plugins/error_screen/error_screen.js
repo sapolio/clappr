@@ -24,8 +24,8 @@ export default class ErrorScreen extends UICorePlugin {
     super(core)
     const opts = this.options.clapprErrorHandler || {}
     this.quiet = !!opts.quiet
-    this.retryDelay = opts.retryDelay || 3
-    this.text = opts.text || 'Что-то пошло не так с видео. Попробуем исправить.'
+    this.retryDelay = opts.retryDelay || 20
+    this.text = opts.text || 'Трансляция в настоящий момент не идёт.<br>Попробуйте, пожалуйста, зайти позже.'
     this.image = opts.image || null
     if (opts.onRetry) {
       if (typeof opts.onRetry === 'function') {

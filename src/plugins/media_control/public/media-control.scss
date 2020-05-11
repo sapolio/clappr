@@ -452,7 +452,8 @@ $padding-small: 10px;
     }
   }
 
-  &.w850 {
+  &.w850,
+  &.mobile {
     .buttons-container {
       bottom: initial;
       top: $padding-main;
@@ -474,29 +475,32 @@ $padding-small: 10px;
       }
     }
   }
-  &.w460 {
+
+  &.w460,
+  &.mobile {
     .media-control-layer[data-controls] {
       right: $padding-small;
       left: $padding-small;
       bottom: $padding-small;
-
-      .media-control-layer-header {
-        padding: 5px 0;
-      }
-      .status-block {
-        line-height: 25px;
-
-        &.members-number {
-          font-size: 25px;
-        }
-        &.current-date {
-          font-size: 12px;
-        }
-      }
     }
     .buttons-container {
       top: $padding-small;
       right: $padding-small;
+    }
+  }
+  &.w460 {
+    .media-control-layer-header {
+      padding: 5px 0;
+    }
+    .status-block {
+      line-height: 25px;
+
+      &.members-number {
+        font-size: 25px;
+      }
+      &.current-date {
+        font-size: 12px;
+      }
     }
   }
   &.w400 {

@@ -169,20 +169,19 @@ export default class MediaControl extends UICorePlugin {
     this.container && this.container.stop()
   }
 
-  setStartStamp(test) {
-    const url = this.options.source
+  setStartStamp(url = this.options.source) {
     let match = url.match(/(\d\d)-(\d\d)-(\d\d)-(\d\d)/)
     if (!match) {
       this.startTimeStamp = null
       return
     }
-    test && test.length && (match = ['',...test])
     const day = match[1]
     const month = match[2]
     const hour = match[3]
     const minute = match[4]
-    console.log(`2020-${month}-${day}T${hour}:${minute}:00.000+03:00`) // eslint-disable-line
-    this.startTimeStamp = Date.parse(`2020-${month}-${day}T${hour}:${minute}:00.000+03:00`)
+    const dateString = `2020-${month}-${day}T${hour}:${minute}:00.000+03:00`
+    this.startTimeStamp = Date.parse(dateString)
+    console.log(dateString) // eslint-disable-line
 
     this.currentDate = new Date(this.startTimeStamp)
   }
@@ -267,6 +266,7 @@ export default class MediaControl extends UICorePlugin {
     let icon = this.core.isFullscreen() ? SvgIcons.exitFullscreen : SvgIcons.fullscreen
     this.$fullscreenToggle.append(icon)
     this.applyButtonStyle(this.$fullscreenToggle)
+    this.$el[Browser.isMobile && !this.core.isFullscreen() ? 'addClass' : 'removeClass']('mobile')
     this.$el[size.width <= 850 ? 'addClass' : 'removeClass']('w850')
     this.$el[size.width <= 550 ? 'addClass' : 'removeClass']('w550')
     this.$el[size.width <= 460 ? 'addClass' : 'removeClass']('w460')
@@ -503,7 +503,7 @@ export default class MediaControl extends UICorePlugin {
   show(event) {
     if (this.disabled) return
 
-    const timeout = 2000
+    const timeout = 3000
     let mousePointerMoved = event && (event.clientX !== this.lastMouseX && event.clientY !== this.lastMouseY)
     if (!event || mousePointerMoved || navigator.userAgent.match(/firefox/i)) {
       clearTimeout(this.hideId)
