@@ -142,6 +142,10 @@ $padding-small: 10px;
     .media-control-layer-header {
       padding: 10px 0;
       align-items: flex-end;
+      
+      &.disabled {
+        display: none;
+      }
     }
 
     button.media-control-button {

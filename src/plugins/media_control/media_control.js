@@ -382,7 +382,7 @@ export default class MediaControl extends UICorePlugin {
     this.fullScreenOnVideoTagSupported = null
     Mediator.off(`${this.options.playerId}:${Events.PLAYER_RESIZE}`, this.playerResize, this)
     this.bindEvents()
-    Browser.isiOS || this.setStartStamp()
+    this.setStartStamp()
     // set the new container to match the volume of the last one
     this.setInitialVolume()
     this.changeTogglePlay()
@@ -420,7 +420,7 @@ export default class MediaControl extends UICorePlugin {
 
     this.currentPositionValue = position * timeMultiplier
     this.currentDurationValue = timeProgress.total * timeMultiplier
-    if (this.startTimeStamp) {
+    if (this.startTimeStamp && this.settings.seekEnabled) {
       this.currentDate.setTime(this.startTimeStamp + (this.currentPositionValue * 1000))
       this.currentDate.setUTCHours(this.currentDate.getUTCHours() + 3)
       this.renderStatus()
@@ -455,7 +455,7 @@ export default class MediaControl extends UICorePlugin {
 
     this.setSeekPercentage(this.currentSeekBarPercentage)
 
-    if (!this.startTimeStamp) return
+    if (!this.startTimeStamp || !this.settings.seekEnabled) return
     const newPosition = formatTime(this.currentPositionValue)
     const newDuration = formatTime(this.currentDurationValue)
     if (newPosition !== this.displayedPosition) {
@@ -723,7 +723,7 @@ export default class MediaControl extends UICorePlugin {
 
   render() {
     const timeout = this.options.hideMediaControlDelay || 2000
-    this.$el.html(this.template({ isiOS: Browser.isiOS }))
+    this.$el.html(this.template())
     this.createCachedElements()
     this.$playPauseToggle.addClass('paused')
     this.$playStopToggle.addClass('stopped')
@@ -756,7 +756,7 @@ export default class MediaControl extends UICorePlugin {
     this.setSeekPercentage(previousSeekPercentage)
 
     process.nextTick(() => {
-      !this.settings.seekEnabled && this.$seekBarContainer.addClass('seek-disabled')
+      !this.settings.seekEnabled && this.$('.media-control-layer-header').addClass('disabled')
       !Browser.isMobile && !this.options.disableKeyboardShortcuts && this.bindKeyEvents()
       this.playerResize({ width: this.options.width, height: this.options.height })
       this.hideVolumeBar(0)
