@@ -4,6 +4,7 @@
 
 import BaseObject from '../../base/base_object'
 import PlayerInfo from '../player_info'
+import Browser from '../browser'
 
 /* Playback Plugins */
 import HTML5VideoPlayback from '../../playbacks/html5_video'
@@ -79,13 +80,24 @@ export default class Loader extends BaseObject {
       NoOp
     ]
 
-    this.containerPlugins = [SpinnerThreeBouncePlugin, WaterMarkPlugin, PosterPlugin, StatsPlugin, GoogleAnalyticsPlugin, ClickToPausePlugin]
-    this.corePlugins = [MediaControl,
+    this.containerPlugins = [
+      SpinnerThreeBouncePlugin,
+      WaterMarkPlugin,
+      PosterPlugin,
+      StatsPlugin,
+      GoogleAnalyticsPlugin,
+    ]
+    Browser.isMobile || this.containerPlugins.push(ClickToPausePlugin)
+    this.corePlugins = [
+      MediaControl,
       // DVRControls,
       // ClosedCaptions,
       // Favicon,
       // SeekTime,
-      SourcesPlugin, EndVideo, ErrorScreen, Strings]
+      SourcesPlugin,
+      EndVideo,
+      ErrorScreen,
+      Strings]
 
     if (!Array.isArray(externalPlugins))
       this.validateExternalPluginsType(externalPlugins)

@@ -2,6 +2,13 @@
   <button class="volume-button" data-volume></button>
   <button class="media-control-button" data-fullscreen></button>
 </div>
+<% if (bigButton) { %>
+  <div class="big-button">
+    <button class="media-control-button"
+    data-playpause
+    ></button>
+  </div>
+<% } %>
 <div class="media-control-layer" data-controls>
   <div class="row media-control-layer-header">
     <span class="members-number status-block"></span>

@@ -57,6 +57,7 @@ export default class MediaControl extends UICorePlugin {
       'mousedown .bar-container[data-volume]': 'startVolumeDrag',
       'mousemove .bar-container[data-volume]': 'mousemoveOnVolumeBar',
       'mousedown .bar-scrubber[data-seekbar]': 'startSeekDrag',
+      'touchstart .bar-scrubber[data-seekbar]': 'startSeekDrag',
       'mousemove .bar-container[data-seekbar]': 'mousemoveOnSeekBar',
       'mouseleave .bar-container[data-seekbar]': 'mouseleaveOnSeekBar',
       'mouseenter .media-control-layer[data-controls]': 'setUserKeepVisible',
@@ -101,8 +102,8 @@ export default class MediaControl extends UICorePlugin {
 
     this.stopDragHandler = (event) => this.stopDrag(event)
     this.updateDragHandler = (event) => this.updateDrag(event)
-    $(document).bind('mouseup', this.stopDragHandler)
-    $(document).bind('mousemove', this.updateDragHandler)
+    $(document).on('mouseup touchend touchcancel', this.stopDragHandler)
+    $(document).on('mousemove touchmove', this.updateDragHandler)
   }
 
   getExternalInterface() {
@@ -286,15 +287,20 @@ export default class MediaControl extends UICorePlugin {
 
   startSeekDrag(event) {
     if (!this.settings.seekEnabled) return
+    let pageX
+    if (event.touches) {
+      if (event.touches.length !== 1) return
+      pageX = event.changedTouches[0].pageX
+    } else {
+      event.preventDefault()
+      pageX = event.pageX
+    }
     this.draggingSeekBar = true
     this.$el.addClass('dragging')
     this.$seekBarPosition.addClass('media-control-notransition')
     this.$seekBarScrubber.addClass('media-control-notransition')
-    if (event) {
-      event.preventDefault()
-      this.dragOffset = event.pageX
-      this.scrubberStartOffset = this.$seekBarScrubber.offset().left - this.$seekBarSizeContainer.offset().left
-    }
+    this.dragOffset = pageX
+    this.scrubberStartOffset = this.$seekBarScrubber.offset().left - this.$seekBarSizeContainer.offset().left
   }
 
   startVolumeDrag(event) {
@@ -314,13 +320,19 @@ export default class MediaControl extends UICorePlugin {
 
   updateDrag(event) {
     if (this.draggingSeekBar) {
-      event.preventDefault()
-      const delta = event.pageX - this.dragOffset
-      // this.dragOffset = event.pageX
-      // const scrubberOffset = this.$seekBarScrubber.offset().left
+      let pageX
+      if (event.touches) {
+        if (event.touches.length !== 1) {
+          this.stopDrag()
+          return
+        }
+        pageX = event.touches[0].pageX
+      } else {
+        event.preventDefault()
+        pageX = event.pageX
+      }
+      const delta = pageX - this.dragOffset
       this.scrubberOffset = this.scrubberStartOffset + delta
-      // const offsetX = event.pageX - this.$seekBarSizeContainer.offset().left
-      // const offsetX = event.target.offsetLeft
       let pos = this.scrubberOffset / this.$seekBarSizeContainer.width() * 100
       pos = Math.min(100, Math.max(pos, 0))
       this.setSeekPercentage(pos)
@@ -583,8 +595,8 @@ export default class MediaControl extends UICorePlugin {
     const $layer = this.$el.find('.media-control-layer')
     this.$duration = $layer.find('.bar-duration[data-seekbar]')
     this.$fullscreenToggle = $('button.media-control-button[data-fullscreen]')
-    this.$playPauseToggle = $layer.find('button.media-control-button[data-playpause]')
-    this.$playStopToggle = $layer.find('button.media-control-button[data-playstop]')
+    this.$playPauseToggle = this.$('button.media-control-button[data-playpause]')
+    this.$playStopToggle = this.$('button.media-control-button[data-playstop]')
     this.$position = $layer.find('.media-control-indicator[data-position]')
     this.$seekBarContainer = $layer.find('.bar-container[data-seekbar]')
     this.$seekBarSizeContainer = $layer.find('.bar-size-container[data-seekbar]')
@@ -723,7 +735,7 @@ export default class MediaControl extends UICorePlugin {
 
   render() {
     const timeout = this.options.hideMediaControlDelay || 2000
-    this.$el.html(this.template())
+    this.$el.html(this.template({ bigButton: Browser.isMobile }))
     this.createCachedElements()
     this.$playPauseToggle.addClass('paused')
     this.$playStopToggle.addClass('stopped')

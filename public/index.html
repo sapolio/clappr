@@ -3,7 +3,10 @@
 
 <head>
   <meta charset="UTF-8">
-  <!-- <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> -->
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta 
+    name="viewport" 
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
   <script type="text/javascript" charset="utf-8" src="latest/clappr.js"></script>
   <script type="text/javascript" charset="utf-8" src="j/main.js"></script>
   <script type="text/javascript" charset="utf-8" src="j/editor/ace.js"></script>
@@ -111,8 +114,9 @@ player.attachTo(playerElement);
         player = new Clappr.Player({
           // participantsRatio: 4,
           // hideMediaControl: false,
+          source: urlParams.src || 'sample12-05-08-00.mp4',
           // source: urlParams.src || 'http://clappr.io/highline.mp4',
-          source: urlParams.src || '//cache-aventica.cdnvideo.ru/aventica/records/12-05-08-00.m3u8',
+          // source: urlParams.src || '//cache-aventica.cdnvideo.ru/aventica/records/12-05-08-00.m3u8',
           // source: urlParams.src || '//live-streams.cdnvideo.ru/cdnvideo/caminandes/playlist.m3u8',
           // source: urlParams.src || '//cache-aventica.cdnvideo.ru/aventica/records/test1%2020200503t035035.m3u8',
           // poster: urlParams.poster || 'http://clappr.io/poster.png',

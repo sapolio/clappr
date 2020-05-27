@@ -73,6 +73,39 @@ $padding-small: 10px;
     }
   }
 
+  .big-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    width: 10%;
+
+    &:before {
+      content: "";
+      display: block;
+      padding-top: 100%;
+    }
+
+    button {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: initial;
+      border-radius: 8px;
+      border: none;
+      padding: 10px;
+      background: rgba(71, 71, 71, 0.4);
+      backdrop-filter: blur($blur-size);
+      outline: none;
+
+      svg path {
+        fill: #fefefe;
+      }
+    }
+  }
+
   &.dragging {
     pointer-events: auto;
     cursor: -webkit-grabbing !important;
@@ -142,7 +175,7 @@ $padding-small: 10px;
     .media-control-layer-header {
       padding: 10px 0;
       align-items: flex-end;
-      
+
       &.disabled {
         display: none;
       }
@@ -219,6 +252,9 @@ $padding-small: 10px;
 
     .media-control-indicator {
       display: none;
+      &[data-position] {
+        touch-action: none;
+      }
       &[data-position],
       &[data-duration] {
         display: block;
@@ -298,6 +334,7 @@ $padding-small: 10px;
         opacity: 1;
         transition: all 0.1s ease-out;
         z-index: 10;
+        touch-action: none;
 
         &:hover {
           background-color: #b91d26;
@@ -468,6 +505,12 @@ $padding-small: 10px;
     }
   }
   &.w550 {
+    .big-button {
+      top: 10px;
+      left: 10px;
+      width: 46px;
+      transform: initial;
+    }
     .media-control-layer[data-controls] .status-block {
       line-height: 30px;
 

@@ -168,7 +168,6 @@ export default class UIObject extends BaseObject {
         this.$el.on(eventName, method.bind(this))
       else
         this.$el.on(eventName, selector, method.bind(this))
-
     }
     return this
   }
