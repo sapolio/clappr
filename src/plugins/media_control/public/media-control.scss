@@ -152,6 +152,7 @@ $padding-small: 10px;
     /* Note: backdrop-filter has minimal browser support */
     backdrop-filter: blur($blur-size);
     border-radius: 10px;
+    overflow: auto;
     transition: bottom 0.4s ease-out;
 
     .status-block {

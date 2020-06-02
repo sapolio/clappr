@@ -5,6 +5,7 @@ import template from '../../base/template'
 // import { SvgIcons } from '../../base/utils'
 import templateHtml from './public/error_screen.html'
 import './public/error_screen.scss'
+import Browser from '../../components/browser'
 
 export default class ErrorScreen extends UICorePlugin {
   get name() {
@@ -25,7 +26,7 @@ export default class ErrorScreen extends UICorePlugin {
     const opts = this.options.clapprErrorHandler || {}
     this.quiet = !!opts.quiet
     this.retryDelay = opts.retryDelay || 20
-    this.text = opts.text || 'Трансляция в настоящий момент не идёт.<br>Попробуйте, пожалуйста, зайти позже.'
+    this.text = opts.text || 'Шествие «Бессмертный полк онлайн» завершилось.</br>Найти своих героев вы можете, выбрав необходимые дату и время показа'
     this.image = opts.image || null
     if (opts.onRetry) {
       if (typeof opts.onRetry === 'function') {
@@ -37,6 +38,7 @@ export default class ErrorScreen extends UICorePlugin {
     } else { this.callBack = null }
 
     this.$el.html(this.template(this))
+    if (Browser.isMobile) this.$el.find('h2.text').css({ 'font-size': '90%' })
     this.image && this.$el.css({ 'background-image': `url(${this.image})` })
     this.$retryTimer = this.$('.retry-timer')
     if (this.options.disableErrorScreen) return this.disable()
@@ -108,7 +110,7 @@ export default class ErrorScreen extends UICorePlugin {
   switchClickToPause(method) {
     if (this.container) {
       let plugin = this.container.getPlugin('click_to_pause')
-      plugin[method]()
+      plugin && plugin[method]()
     }
   }
 
